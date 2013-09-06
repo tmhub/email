@@ -30,11 +30,11 @@
                 </entities>
             </tm_email_mysql4>
 
-<!--            <core>
+            <core>
                 <rewrite>
                     <email_template>TM_Email_Model_Template</email_template>
                 </rewrite>
-            </core>-->
+            </core>
 
         </models>
 
