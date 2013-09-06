@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <TM_Email>
+            <version>0.1.0</version>
+        </TM_Email>
+    </modules>
+
+    <global>
+        <helpers>
+            <tm_email>
+                <class>TM_Email_Helper</class>
+            </tm_email>
+        </helpers>
+
+        <models>
+            <tm_email>
+                <class>TM_Email_Model</class>
+                <resourceModel>tm_email_mysql4</resourceModel>
+            </tm_email>
+            <tm_email_mysql4>
+                <class>TM_Email_Model_Mysql4</class>
+                <entities>
+                    <gateway>
+                        <table>tm_email_gateway</table>
+                    </gateway>
+<!--                    <queue>
+                        <table>tm_queue</table>
+                    </queue>-->
+                </entities>
+            </tm_email_mysql4>
+
+<!--            <core>
+                <rewrite>
+                    <email_template>TM_Email_Model_Template</email_template>
+                </rewrite>
+            </core>-->
+
+        </models>
+
+        <resources>
+            <!--  -->
+            <tm_email_setup>
+                <setup>
+                    <module>TM_Email</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </tm_email_setup>
+            <!-- -->
+            <tm_email_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tm_email_write>
+
+            <tm_email_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </tm_email_read>
+        </resources>
+
+        <blocks>
+            <tm_email>
+                <class>TM_Email_Block</class>
+            </tm_email>
+        </blocks>
+
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <tm_email before="Mage_Adminhtml">TM_Email_Adminhtml</tm_email>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <tm_email>
+                    <file>tm/email.xml</file>
+                </tm_email>
+            </updates>
+        </layout>
+
+<!--        <translate>
+            <modules>
+                <TM_Email>
+                    <files>
+                        <default>TM_Email.csv</default>
+                    </files>
+                </TM_Email>
+            </modules>
+        </translate>-->
+    </adminhtml>
+
+</config>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_gateway_index>
+        <reference name="content">
+            <block type="tm_email/adminhtml_gateway" name="email.gateway" />
+        </reference>
+    </adminhtml_gateway_index>
+    <adminhtml_gateway_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="tm_email/adminhtml_gateway_edit" name="email.gateway.edit" />
+        </reference>
+    </adminhtml_gateway_edit>
+</layout>
