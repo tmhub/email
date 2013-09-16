@@ -74,12 +74,16 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
             'values'    => array(
 
                 array(
-                    'value'     => 1,//TM_Helpmate_Model_Gateway::TYPE_POP3,
-                    'label'     => Mage::helper('tm_email')->__('Pop3')
+                    'value'     => TM_Email_Model_Gateway::TYPE_POP3,
+                    'label'     => Mage::helper('tm_email')->__('Pop3 (to receive)')
                 ),
                 array(
-                    'value'     => 2,//TM_Helpmate_Model_Gateway::TYPE_IMAP,
-                    'label'     => Mage::helper('tm_email')->__('Imap')
+                    'value'     => TM_Email_Model_Gateway::TYPE_IMAP,
+                    'label'     => Mage::helper('tm_email')->__('Imap (to receive)')
+                ),
+                array(
+                    'value'     => TM_Email_Model_Gateway::TYPE_SMTP,
+                    'label'     => Mage::helper('tm_email')->__('Smtp (to send)')
                 )
             ),
         ));
@@ -110,7 +114,7 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
             'class'     => 'required-entry',
             'required'  => true,
             'note'      => Mage::helper('tm_email')->__(
-                '110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default'
+                '110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default, 25 and 587 (465) for SMTP'
             ),
             'name'      => 'port',
         ));

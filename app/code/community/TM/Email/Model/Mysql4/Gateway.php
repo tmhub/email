@@ -8,14 +8,21 @@ class TM_Email_Model_Mysql4_Gateway extends Mage_Core_Model_Mysql4_Abstract
         $this->_init('tm_email/gateway', 'id');
     }
 
-    public function getOptionArray()
+    public function getOptionArray($types = array())
     {
+        if (!is_array($types)) {
+            $types = array($types);
+        }
         $select = $this->_getReadAdapter()->select()
             ->from($this->getMainTable())
             ;
 
         $rowset = array();
-        foreach ($this->_getReadAdapter()->fetchAll($select) as $row) {
+        foreach ($this->_getReadAdapter()->fetchAll($select) as $row)
+        {
+            if (!empty($types) && !in_array($row['type'], $types)) {
+                continue;
+            }
             $rowset[$row['id']] = $row['name'];
         }
 

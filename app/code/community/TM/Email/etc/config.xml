@@ -24,9 +24,12 @@
                     <gateway>
                         <table>tm_email_gateway</table>
                     </gateway>
-<!--                    <queue>
-                        <table>tm_queue</table>
-                    </queue>-->
+                    <queue_queue>
+                        <table>tm_email_queue_queue</table>
+                    </queue_queue>
+                    <queue_message>
+                        <table>tm_email_queue_message</table>
+                    </queue_message>
                 </entities>
             </tm_email_mysql4>
 
@@ -101,5 +104,18 @@
             </modules>
         </translate>-->
     </adminhtml>
+
+    <crontab>
+        <jobs>
+            <tm_email_send_letter>
+                <schedule>
+                    <cron_expr>*/2 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>tm_email/observer::scheduledSend</model>
+                </run>
+            </tm_email_send_letter>
+        </jobs>
+    </crontab>
 
 </config>

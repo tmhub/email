@@ -21,7 +21,7 @@ $table = $installer->getConnection()
     ->addColumn('type', Varien_Db_Ddl_Table::TYPE_TINYINT, 1, array(
         'nullable'  => false,
         'default'   => 1,
-        ), 'Type (2 - imap else pop3)')
+        ), 'Type (2 - imap, 3 - smtp else pop3)')
     ->addColumn('email', Varien_Db_Ddl_Table::TYPE_TEXT, 128, array(
         'nullable'  => false,
         'default'   => '',
@@ -54,6 +54,86 @@ $table = $installer->getConnection()
         ), 'Remove')
     ;
 $installer->getConnection()->createTable($table);
+
+$table = $installer->getConnection()
+    ->newTable($installer->getTable('tm_email_queue_message'))
+    ->addColumn('message_id', Varien_Db_Ddl_Table::TYPE_BIGINT, 20, array(
+        'identity'  => true,
+        'unsigned'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+        ), 'Message ID')
+    ->addColumn('queue_id', Varien_Db_Ddl_Table::TYPE_INTEGER, 10, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        ), 'Queue Id')
+    ->addColumn('handle', Varien_Db_Ddl_Table::TYPE_CHAR, 32, array(
+        'default'   => NULL,
+        ), 'Handle')
+    ->addColumn('body', Varien_Db_Ddl_Table::TYPE_VARCHAR, 8192, array(
+        'nullable'  => false,
+        ), 'Body')
+    ->addColumn('md5', Varien_Db_Ddl_Table::TYPE_CHAR, 32, array(
+        'nullable'  => false,
+        ), 'MD5')
+    ->addColumn('timeout', Varien_Db_Ddl_Table::TYPE_DECIMAL, NULL, array(
+        'precision' => 14,
+        'scale'     => 4,
+        'unsigned'  => true,
+        'default'   => NULL,
+        ), 'Timeout')
+    ->addColumn('created', Varien_Db_Ddl_Table::TYPE_INTEGER, 10, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        ), 'Created')
+    ;
+$installer->getConnection()->createTable($table);
+
+$installer->getConnection()->addIndex(
+    $installer->getTable('tm_email_queue_message'),
+    $installer->getIdxName(
+        'tm_email_queue_message',
+        array('handle'),
+        Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE
+    ),
+    array('handle'),
+    Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE
+);
+
+$installer->getConnection()->addIndex(
+    $installer->getTable('tm_email_queue_message'),
+    $installer->getIdxName('tm_email_queue_message', array('queue_id')),
+    array('queue_id')
+);
+
+$table = $installer->getConnection()
+    ->newTable($installer->getTable('tm_email_queue_queue'))
+    ->addColumn('queue_id', Varien_Db_Ddl_Table::TYPE_INTEGER, 10, array(
+        'identity'  => true,
+        'unsigned'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+        ), 'Queue ID')
+    ->addColumn('queue_name', Varien_Db_Ddl_Table::TYPE_VARCHAR, 100, array(
+        'nullable'  => false,
+        ), 'Queue Name')
+    ->addColumn('timeout', Varien_Db_Ddl_Table::TYPE_SMALLINT, 5, array(
+        'nullable'  => false,
+        'default'   => 30,
+        ), 'Timeout')
+    ;
+$installer->getConnection()->createTable($table);
+
+/**
+ * Add foreign key
+ */
+$installer->getConnection()->addForeignKey(
+    $installer->getFkName('tm_email_queue_message', 'queue_id', 'tm_email_queue_queue', 'queue_id'),
+    $installer->getTable('tm_email_queue_message'),
+    'queue_id',
+    $installer->getTable('tm_email_queue_queue'),
+    'queue_id'
+);
 
 //throw new Exception;
 $installer->run("

@@ -3,6 +3,7 @@ class TM_Email_Model_Gateway extends Mage_Core_Model_Abstract
 {
     const TYPE_POP3   = 1;
     const TYPE_IMAP   = 2;
+    const TYPE_SMTP   = 3;
 
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
@@ -61,4 +62,32 @@ class TM_Email_Model_Gateway extends Mage_Core_Model_Abstract
         return new $class($config);
     }
 
+    public function getTransport()
+    {
+        $type = $this->getType();
+        if (self::TYPE_SMTP !== $type) {
+            throw new Exception(
+               Mage::helper('tm_email')->__(
+                   'Protocol type incorrect'
+           ));
+        }
+        $config = array();
+
+        $port = $this->getPort();
+        if (!empty($port)) {
+            $config['port'] = $port;
+        }
+        if ($this->getSsl()) {
+            $config['ssl'] = $this->getSsl();
+        }
+        $user = $this->getUser();
+        $password = $this->getPassword();
+        if ($user && $password) {
+            $config['auth'] = 'login';
+            $config['username'] = $user;
+            $config['password'] = $password;
+        }
+
+        return Zend_Mail_Transport_Smtp($this->getHost(), $config);
+    }
 }
