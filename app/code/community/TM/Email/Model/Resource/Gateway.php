@@ -1,6 +1,6 @@
 <?php
 
-class TM_Email_Model_Mysql4_Gateway extends Mage_Core_Model_Mysql4_Abstract
+class TM_Email_Model_Resource_Gateway extends Mage_Core_Model_Mysql4_Abstract
 {
     public function _construct()
     {

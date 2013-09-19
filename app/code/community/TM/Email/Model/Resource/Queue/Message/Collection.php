@@ -1,6 +1,6 @@
 <?php
 
-class TM_Email_Model_Mysql4_Queue_Message_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class TM_Email_Model_Resource_Queue_Message_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
     {

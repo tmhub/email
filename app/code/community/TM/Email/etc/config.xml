@@ -16,10 +16,10 @@
         <models>
             <tm_email>
                 <class>TM_Email_Model</class>
-                <resourceModel>tm_email_mysql4</resourceModel>
+                <resourceModel>tm_email_resource</resourceModel>
             </tm_email>
-            <tm_email_mysql4>
-                <class>TM_Email_Model_Mysql4</class>
+            <tm_email_resource>
+                <class>TM_Email_Model_Resource</class>
                 <entities>
                     <gateway>
                         <table>tm_email_gateway</table>
@@ -31,7 +31,7 @@
                         <table>tm_email_queue_message</table>
                     </queue_message>
                 </entities>
-            </tm_email_mysql4>
+            </tm_email_resource>
 
             <core>
                 <rewrite>
