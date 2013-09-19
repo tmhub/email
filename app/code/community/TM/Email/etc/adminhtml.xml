@@ -21,8 +21,20 @@
                         </gateway>
                         <queue translate="title">
                             <title>Email Queues</title>
-                            <action>adminhtml/queue/index</action>
+                            <!--<action>adminhtml/queue_queue/index</action>-->
                             <sort_order>30</sort_order>
+                            <children>
+                                <queue>
+                                    <title>Email Queues</title>
+                                    <action>adminhtml/queue_queue/index</action>
+                                    <sort_order>10</sort_order>
+                                </queue>
+                                <message>
+                                    <title>Queues Message</title>
+                                    <action>adminhtml/queue_message/index</action>
+                                    <sort_order>10</sort_order>
+                                </message>
+                            </children>
                         </queue>
                     </children>
                 </tm_email>

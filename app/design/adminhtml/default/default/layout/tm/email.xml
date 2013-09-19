@@ -13,4 +13,29 @@
             <block type="tm_email/adminhtml_gateway_edit" name="email.gateway.edit" />
         </reference>
     </adminhtml_gateway_edit>
+
+    <adminhtml_queue_queue_index>
+        <reference name="content">
+            <block type="tm_email/adminhtml_queue_queue" name="email.queue.queues" />
+        </reference>
+    </adminhtml_queue_queue_index>
+
+    <adminhtml_queue_queue_edit>
+        <reference name="content">
+            <block type="tm_email/adminhtml_queue_queue_edit" name="email.queue.edit" />
+        </reference>
+    </adminhtml_queue_queue_edit>
+
+    <adminhtml_queue_message_index>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="tm_email/adminhtml_queue_message" name="email.queue.messages" />
+        </reference>
+    </adminhtml_queue_message_index>
+
+    <adminhtml_queue_message_preview>
+        <block type="core/template" name="root" output="toHtml" template="system/email/template/preview.phtml">
+            <block type="tm_email/adminhtml_system_email_template_preview" name="content" as="content"></block>
+        </block>
+    </adminhtml_queue_message_preview>
 </layout>
