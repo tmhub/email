@@ -21,9 +21,12 @@
             <tm_email_resource>
                 <class>TM_Email_Model_Resource</class>
                 <entities>
-                    <gateway>
-                        <table>tm_email_gateway</table>
-                    </gateway>
+                    <gateway_storage>
+                        <table>tm_email_gateway_storage</table>
+                    </gateway_storage>
+                    <gateway_transport>
+                        <table>tm_email_gateway_transport</table>
+                    </gateway_transport>
                     <queue_queue>
                         <table>tm_email_queue_queue</table>
                     </queue_queue>

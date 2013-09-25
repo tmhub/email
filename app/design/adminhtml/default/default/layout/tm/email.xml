@@ -1,18 +1,35 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <adminhtml_gateway_index>
+
+    <adminhtml_gateway_storage_index>
         <reference name="content">
-            <block type="tm_email/adminhtml_gateway" name="email.gateway" />
+            <block type="tm_email/adminhtml_gateway_storage" name="email.gateway.storage" />
         </reference>
-    </adminhtml_gateway_index>
-    <adminhtml_gateway_edit>
+    </adminhtml_gateway_storage_index>
+
+    <adminhtml_gateway_storage_edit>
         <reference name="head">
             <action method="setCanLoadExtJs"><flag>1</flag></action>
         </reference>
         <reference name="content">
-            <block type="tm_email/adminhtml_gateway_edit" name="email.gateway.edit" />
+            <block type="tm_email/adminhtml_gateway_storage_edit" name="email.gateway.storage.edit" />
         </reference>
-    </adminhtml_gateway_edit>
+    </adminhtml_gateway_storage_edit>
+
+    <adminhtml_gateway_transport_index>
+        <reference name="content">
+            <block type="tm_email/adminhtml_gateway_transport" name="email.gateway.transport" />
+        </reference>
+    </adminhtml_gateway_transport_index>
+
+    <adminhtml_gateway_transport_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="tm_email/adminhtml_gateway_transport_edit" name="email.gateway.transport.edit" />
+        </reference>
+    </adminhtml_gateway_transport_edit>
 
     <adminhtml_queue_queue_index>
         <reference name="content">

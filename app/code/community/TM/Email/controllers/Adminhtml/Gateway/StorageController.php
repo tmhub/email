@@ -1,11 +1,12 @@
 <?php
 
-class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Action
+class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Controller_Action
 {
 
-    protected function _initAction() {
+    protected function _initAction()
+    {
         $this->loadLayout();
-        $this->_setActiveMenu('tm_email/tm_email')
+        $this->_setActiveMenu('tm_email/gateway_storage')
             ->_addBreadcrumb(
                 Mage::helper('tm_email')->__('Gateway Manager'),
                 Mage::helper('tm_email')->__('Gateway')
@@ -24,7 +25,7 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
     {
         $id = $this->getRequest()->getParam('id', 0);
 
-        $gateway = Mage::getModel('tm_email/gateway')->load($id);
+        $gateway = Mage::getModel('tm_email/gateway_storage')->load($id);
         $gatewayId = $gateway->getId();
 
         if (!$gatewayId && 0 !== $id) {
@@ -39,10 +40,10 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
             $gateway->setData($data);
         }
 
-        Mage::register('tm_email_gateway_data', $gateway);
+        Mage::register('tm_email_gateway_storage_data', $gateway);
 
         $this->loadLayout();
-        $this->_setActiveMenu('tm_email/gateway');
+        $this->_setActiveMenu('tm_email/gateway_storage');
         $this->renderLayout();
     }
 
@@ -55,16 +56,16 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
     {
         $data = $this->getRequest()->getPost();
 
-        $gateway = Mage::getModel('tm_email/gateway');
+        $modelStorage = Mage::getModel('tm_email/gateway_storage');
 
         if (empty($data['id'])) {
             unset($data['id']);
         }
-        $gateway->setData($data);
+        $modelStorage->setData($data);
 
         try {
 
-            $storage  = $gateway->getStorage();
+            $storage  = $modelStorage->getStorage();
             $storage->countMessages();
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 Mage::helper('tm_email')->__(
@@ -94,14 +95,14 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
         }
 
         try  {
-            $gateway = Mage::getModel('tm_email/gateway');
+            $storage = Mage::getModel('tm_email/gateway_storage');
 
             if (empty($data['id'])) {
                 unset($data['id']);
             }
-            $gateway->setData($data);
+            $storage->setData($data);
 
-            $gateway->save();
+            $storage->save();
 
             //success
             Mage::getSingleton('adminhtml/session')->addSuccess(
@@ -110,7 +111,7 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
             Mage::getSingleton('adminhtml/session')->setFormData(false);
 
             if ($this->getRequest()->getParam('back')) {
-                $this->_redirect('*/*/edit', array('id' => $gateway->getId()));
+                $this->_redirect('*/*/edit', array('id' => $storage->getId()));
                 return;
             }
             $this->_redirect('*/*/');
@@ -125,12 +126,12 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
 
     public function deleteAction()
     {
-        $gatewayId = $this->getRequest()->getParam('id');
-        if( 0 < $gatewayId) {
+        $_id = $this->getRequest()->getParam('id');
+        if( 0 < $_id) {
             try {
-                $gateway = Mage::getModel('tm_email/gateway');
+                $storage = Mage::getModel('tm_email/gateway_storage');
 
-                $gateway->setId($gatewayId)->delete();
+                $storage->setId($_id)->delete();
 
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__('Item was successfully deleted')
@@ -138,26 +139,27 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
                 $this->_redirect('*/*/');
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                $this->_redirect('*/*/edit', array('id' => $gatewayId));
+                $this->_redirect('*/*/edit', array('id' => $_id));
             }
         }
         $this->_redirect('*/*/');
     }
 
-    public function massDeleteAction() {
-        $gatewayIds = $this->getRequest()->getParam('gateway');
-        if(!is_array($gatewayIds)) {
+    public function massDeleteAction()
+    {
+        $_ids = $this->getRequest()->getParam('gateway');
+        if(!is_array($_ids)) {
             Mage::getSingleton('adminhtml/session')
                 ->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {
-                foreach ($gatewayIds as $gatewayId) {
-                    $gateway = Mage::getModel('tm_email/gateway')->load($gatewayId);
-                    $gateway->delete();
+                foreach ($_ids as $_id) {
+                    $storage = Mage::getModel('tm_email/gateway_storage')->load($_id);
+                    $storage->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                    'Total of %d record(s) were successfully deleted', count($gatewayIds)
+                    'Total of %d record(s) were successfully deleted', count($_ids)
                     )
                 );
             } catch (Exception $e) {
@@ -169,8 +171,8 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
 
     public function exportCsvAction()
     {
-        $fileName   = 'tm_email_gateway.csv';
-        $content    = $this->getLayout()->createBlock('tm_email/adminhtml_gateway_grid')
+        $fileName   = 'tm_email_gateway_storage.csv';
+        $content    = $this->getLayout()->createBlock('tm_email/adminhtml_gateway_storage_grid')
             ->getCsv();
 
         $this->_sendUploadResponse($fileName, $content);
@@ -178,8 +180,8 @@ class TM_Email_Adminhtml_GatewayController extends Mage_Adminhtml_Controller_Act
 
     public function exportXmlAction()
     {
-        $fileName   = 'tm_email_gateway.xml';
-        $content    = $this->getLayout()->createBlock('tm_email/adminhtml_gateway_grid')
+        $fileName   = 'tm_email_gateway_storage.xml';
+        $content    = $this->getLayout()->createBlock('tm_email/adminhtml_gateway_storage_grid')
             ->getXml();
 
         $this->_sendUploadResponse($fileName, $content);

@@ -115,7 +115,7 @@ class TM_Email_Model_Template extends Mage_Core_Model_Email_Template
         $variables['name'] = reset($names);
 
         $transport = Zend_Mail::getDefaultTransport();
-        if (! $transport instanceof Zend_Mail_Transport_Abstract) {
+        if (!$transport instanceof Zend_Mail_Transport_Abstract) {
             ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
             ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
 

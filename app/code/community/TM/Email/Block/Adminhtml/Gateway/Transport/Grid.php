@@ -1,11 +1,11 @@
 <?php
 
-class TM_Email_Block_Adminhtml_Gateway_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class TM_Email_Block_Adminhtml_Gateway_Transport_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setId('tm_email_gateway_grid');
+        $this->setId('tm_email_gateway_transport_grid');
         $this->setDefaultSort('id');
         $this->setDefaultDir('DESC');
 
@@ -14,7 +14,7 @@ class TM_Email_Block_Adminhtml_Gateway_Grid extends Mage_Adminhtml_Block_Widget_
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('tm_email/gateway')->getCollection();
+        $collection = Mage::getModel('tm_email/gateway_transport')->getCollection();
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -54,8 +54,8 @@ class TM_Email_Block_Adminhtml_Gateway_Grid extends Mage_Adminhtml_Block_Widget_
           'index'     => 'type',
           'type'      => 'options',
           'options'   => array(
-                1     => Mage::helper('tm_email')->__('Pop3'),
-                2     => Mage::helper('tm_email')->__('Imap')
+                0     => Mage::helper('tm_email')->__('Sendmail'),
+                1     => Mage::helper('tm_email')->__('Smtp')
             )
         ));
 

@@ -1,6 +1,6 @@
 <?php
 
-class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
+class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
 
     /**
@@ -9,8 +9,8 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
     public function __construct()
     {
         parent::__construct();
-        $this->setId('tm_email_gateway_form');
-        $this->setTitle(Mage::helper('tm_email')->__('Gateway Information'));
+        $this->setId('tm_email_gateway_transport_form');
+        $this->setTitle(Mage::helper('tm_email')->__('Mail Transport'));
     }
 
     protected function _prepareForm()
@@ -23,13 +23,14 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
             )
         );
 
-        if (Mage::registry('tm_email_gateway_data') ) {
-            $data = Mage::registry('tm_email_gateway_data')->getData();
+        $data = array();
+        if (Mage::registry('tm_email_gateway_transport_data') ) {
+            $data = Mage::registry('tm_email_gateway_transport_data')->getData();
         }
 
         $fieldset = $form->addFieldset(
             'gateway_general_form',
-            array('legend' => Mage::helper('tm_email')->__('Email Gateway Details'))
+            array('legend' => Mage::helper('tm_email')->__('Email Transport Details'))
         );
         $fieldset->addField('id', 'hidden', array(
         //  'class'     => 'required-entry',
@@ -72,18 +73,13 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
             'name'      => 'type',
             'required'  => true,
             'values'    => array(
-
                 array(
-                    'value'     => TM_Email_Model_Gateway::TYPE_POP3,
-                    'label'     => Mage::helper('tm_email')->__('Pop3 (to receive)')
+                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SENDMAIL,
+                    'label'     => Mage::helper('tm_email')->__('Sendmail')
                 ),
                 array(
-                    'value'     => TM_Email_Model_Gateway::TYPE_IMAP,
-                    'label'     => Mage::helper('tm_email')->__('Imap (to receive)')
-                ),
-                array(
-                    'value'     => TM_Email_Model_Gateway::TYPE_SMTP,
-                    'label'     => Mage::helper('tm_email')->__('Smtp (to send)')
+                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SMTP,
+                    'label'     => Mage::helper('tm_email')->__('Smtp')
                 )
             ),
         ));
@@ -114,7 +110,7 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
             'class'     => 'required-entry',
             'required'  => true,
             'note'      => Mage::helper('tm_email')->__(
-                '110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default, 25 and 587 (465) for SMTP'
+                '25 and 587 (465) for SMTP by default'
             ),
             'name'      => 'port',
         ));
@@ -138,6 +134,27 @@ class TM_Email_Block_Adminhtml_Gateway_Edit_Form extends Mage_Adminhtml_Block_Wi
                 )
             ),
         ));
+
+        $fieldset->addField('auth', 'select', array(
+            'label'     => Mage::helper('tm_email')->__('Authorize Type'),
+            'name'      => 'auth',
+            'required'  => true,
+            'values'    => array(
+                array(
+                    'value'     => 'login',
+                    'label'     => Mage::helper('tm_email')->__('Login'),
+                ),
+                array(
+                    'value'     => 'plain',
+                    'label'     => Mage::helper('tm_email')->__('Plain'),
+                ),
+                array(
+                    'value'     => 'crammd5',
+                    'label'     => Mage::helper('tm_email')->__('Crammd5'),
+                )
+            ),
+        ));
+
         /*
         $fieldset->addField('remove', 'select', array(
             'label'     => Mage::helper('tm_email')->__('Remove'),

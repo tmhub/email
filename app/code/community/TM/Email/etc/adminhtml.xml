@@ -16,8 +16,20 @@
                         </email_template>
                         <gateway translate="title">
                             <title>Email Gateways</title>
-                            <action>adminhtml/gateway/index</action>
+                            <!--<action>adminhtml/gateway/index</action>-->
                             <sort_order>20</sort_order>
+                            <children>
+                                <queue>
+                                    <title>Storage</title>
+                                    <action>adminhtml/gateway_storage/index</action>
+                                    <sort_order>10</sort_order>
+                                </queue>
+                                <message>
+                                    <title>Transport</title>
+                                    <action>adminhtml/gateway_transport/index</action>
+                                    <sort_order>20</sort_order>
+                                </message>
+                            </children>
                         </gateway>
                         <queue translate="title">
                             <title>Email Queues</title>
@@ -25,14 +37,14 @@
                             <sort_order>30</sort_order>
                             <children>
                                 <queue>
-                                    <title>Email Queues</title>
+                                    <title>Queues</title>
                                     <action>adminhtml/queue_queue/index</action>
                                     <sort_order>10</sort_order>
                                 </queue>
                                 <message>
-                                    <title>Queues Message</title>
+                                    <title>Messages</title>
                                     <action>adminhtml/queue_message/index</action>
-                                    <sort_order>10</sort_order>
+                                    <sort_order>20</sort_order>
                                 </message>
                             </children>
                         </queue>

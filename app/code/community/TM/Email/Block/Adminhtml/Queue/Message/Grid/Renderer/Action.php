@@ -19,14 +19,14 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid_Renderer_Action
             $title = Mage::helper('tm_email')->__('Preview');
             $subject = Zend_Mime_Decode::decodeQuotedPrintable($mail->getSubject());
             $script = '
-                    changesUrl = \'' . $this->getUrl('*/*/preview', array('id' => $row->getMessageId())) .  '\'
+                    var changesUrl = \'' . $this->getUrl('*/*/preview', array('id' => $row->getMessageId())) .  '\';
                     Dialog.info(null, {
                         draggable:true,
                         resizable:true,
                         closable:true,
                         className: \'magento\',
                         windowClassName:\'popup-window\',
-                        title: \'' . $title . ' : ' . $subject . '\',
+                        title: \'' . $title . ' : ' . addslashes($subject) . '\',
                         top:50,
                         width:950,
                         height:500,
