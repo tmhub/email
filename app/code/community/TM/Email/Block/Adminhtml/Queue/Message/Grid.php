@@ -31,11 +31,12 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
 
         $queues = Mage::getModel('tm_email/queue_queue')->getOptionArray();
         $this->addColumn('queue_id', array(
-          'header'    => Mage::helper('tm_email')->__('Queue'),
-          'align'     => 'left',
-          'index'     => 'queue_id',
-          'type'      => 'options',
-          'options'   => $queues
+            'header'    => Mage::helper('tm_email')->__('Queue'),
+            'align'     => 'left',
+            'index'     => 'queue_id',
+            'type'      => 'options',
+            'options'   => $queues,
+            'frame_callback' => array($this, 'decorateQueue')
         ));
 
 //        $this->addColumn('handle', array(
@@ -85,10 +86,20 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
           'type'      => 'datetime',
         ));
 
+        $this->addColumn('status', array(
+            'header'  => Mage::helper('tm_email')->__('Status'),
+            'align'   => 'left',
+            'width'   => '80px',
+            'index'   => 'status',
+            'type'    => 'options',
+            'options' => Mage::getSingleton('tm_email/queue_message_status')->getOptionArray(),
+            'frame_callback' => array($this, 'decorateStatus')
+        ));
+
         $this->addColumn('actions', array(
-            'header' => Mage::helper('adminnotification')->__('Actions'),
-            'width' => '200px',
-            'filter' => false,
+            'header'   => Mage::helper('adminnotification')->__('Actions'),
+            'width'    => '200px',
+            'filter'   => false,
             'sortable' => false,
             'renderer' => 'tm_email/adminhtml_queue_message_grid_renderer_action'
         ));
@@ -110,7 +121,45 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
              'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
         ));
 
+        $_statuses = Mage::getSingleton('tm_email/queue_message_status')->getOptionArray();
+        $statuses = array();
+        foreach ($_statuses as $_value => $_label) {
+            $statuses[] = array('label' => $_label, 'value' => $_value);
+        }
+        array_unshift($statuses, array('label'=>'', 'value'=>''));
+        $this->getMassactionBlock()->addItem('status', array(
+            'label'=> Mage::helper('tm_email')->__('Change status'),
+            'url' => $this->getUrl('*/*/massStatus', array('_current'=>true)),
+            'additional' => array(
+                'visibility' => array(
+                    'name'   => 'status',
+                    'type'   => 'select',
+                    'class'  => 'required-entry',
+                    'label'  => Mage::helper('tm_email')->__('Status'),
+                    'values' => $statuses
+                )
+            )
+        ));
+
+
+
+
         return $this;
+    }
+
+
+    /**
+     * Decorate status column values
+     *
+     * @return string
+     */
+    public function decorateQueue($value, $row, $column, $isExport)
+    {
+//        Zend_Debug::dump($row->getData());
+        $links = array();
+        $href = $this->getUrl('*/queue_queue/edit', array('id' => $row->getQueueId()));
+        $links[] = sprintf('<a href="%s">%s</a>', $href, $value);
+        return implode(' | ', $links);
     }
 
     /**
@@ -159,6 +208,39 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
         $headers = $mail->getHeaders();
         $to = isset($headers["To"][0]) ? $headers["To"][0] : '';
         return Zend_Mime_Decode::decodeQuotedPrintable($to);
+    }
+
+    protected function _getCell($value, $class = 'critical')
+    {
+        return '<span class="grid-severity-' . $class . '"><span>'
+            . $value
+            . '</span></span>';
+    }
+
+
+    /**
+    * Decorate status column values
+    *
+    * @return string
+    */
+    public function decorateStatus($value, $row, $column, $isExport)
+    {
+        switch ($row->status) {
+            case TM_Email_Model_Queue_Message_Status::FAILURE:
+                $class = 'critical';
+            break;
+            case TM_Email_Model_Queue_Message_Status::DISAPPROVED:
+                $class = 'major';
+            break;
+            case TM_Email_Model_Queue_Message_Status::APPROVED:
+                $class = 'minor';
+            break;
+            case TM_Email_Model_Queue_Message_Status::SUCCESS:
+            default:
+                $class = 'notice';
+            break;
+        }
+        return $this->_getCell($value, $class);
     }
 
 //    public function getRowUrl($row)

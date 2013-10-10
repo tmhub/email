@@ -48,31 +48,17 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Edit_Form extends Mage_Adminhtml_Bloc
             'label'     => Mage::helper('tm_email')->__('Timeout'),
             'class'     => 'required-entry',
             'required'  => true,
-//            'note'      => Mage::helper('tm_email')->__(
-//                '110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default, 25 and 587 (465) for SMTP'
-//            ),
             'name'      => 'timeout',
         ));
 
-
-        /*
-        $fieldset->addField('remove', 'select', array(
-            'label'     => Mage::helper('tm_email')->__('Remove'),
-            'name'      => 'remove',
-            'required'  => true,
-            'values'    => array(
-
-                array(
-                    'value'     => 0,
-                    'label'     => Mage::helper('tm_email')->__('Disabled')
-                ),
-                array(
-                    'value'     => 1,
-                    'label'     => Mage::helper('tm_email')->__('Enabled')
-                )
-            ),
+        $fieldset->addField('default_status', 'select', array(
+            'label'    => Mage::helper('tm_email')->__('Default Status'),
+            'title'    => Mage::helper('tm_email')->__('Default Status'),
+            'name'     => 'default_status',
+            'required' => true,
+            'options'  => Mage::getSingleton('tm_email/queue_message_status')->getOptionArray(),
         ));
-        */
+
         $form->setValues($data);
 
         $form->setUseContainer(true);

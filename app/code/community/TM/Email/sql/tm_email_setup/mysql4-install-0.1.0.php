@@ -142,6 +142,11 @@ $table = $installer->getConnection()
     ->addColumn('md5', Varien_Db_Ddl_Table::TYPE_CHAR, 32, array(
         'nullable'  => false,
         ), 'MD5')
+    ->addColumn('status', Varien_Db_Ddl_Table::TYPE_SMALLINT, 1, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        'default'   => TM_Email_Model_Queue_Message_Status::APPROVED,
+        ), 'Status')
     ->addColumn('timeout', Varien_Db_Ddl_Table::TYPE_DECIMAL, NULL, array(
         'precision' => 14,
         'scale'     => 4,
@@ -183,6 +188,11 @@ $table = $installer->getConnection()
     ->addColumn('queue_name', Varien_Db_Ddl_Table::TYPE_VARCHAR, 100, array(
         'nullable'  => false,
         ), 'Queue Name')
+    ->addColumn('default_status', Varien_Db_Ddl_Table::TYPE_SMALLINT, 1, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        'default'   => TM_Email_Model_Queue_Message_Status::APPROVED,
+        ), 'Status')
     ->addColumn('timeout', Varien_Db_Ddl_Table::TYPE_SMALLINT, 5, array(
         'nullable'  => false,
         'default'   => 30,

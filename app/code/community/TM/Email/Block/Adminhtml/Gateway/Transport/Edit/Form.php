@@ -73,10 +73,10 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             'name'      => 'type',
             'required'  => true,
             'values'    => array(
-                array(
-                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SENDMAIL,
-                    'label'     => Mage::helper('tm_email')->__('Sendmail')
-                ),
+//                array(
+//                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SENDMAIL,
+//                    'label'     => Mage::helper('tm_email')->__('Sendmail')
+//                ),
                 array(
                     'value'     => TM_Email_Model_Gateway_Transport::TYPE_SMTP,
                     'label'     => Mage::helper('tm_email')->__('Smtp')
