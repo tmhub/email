@@ -248,7 +248,7 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
         $msg->created  = time();
         $msg->body     = $message;
         $msg->md5      = md5($message);
-        $msg->status   = $this->getQueueDefaultStatus($message);
+        $msg->status   = $this->getQueueDefaultStatus($queue->getName());
         // $msg->timeout = ??? @TODO
 
         try {
@@ -359,6 +359,31 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
     }
 
     /**
+     * Set a message status from the queue
+     *
+     * Returns true if the message is deleted, false if the deletion is
+     * unsuccessful.
+     *
+     * @param  Zend_Queue_Message $message
+     * @param  boolean $status
+     * @return boolean
+     * @throws Zend_Queue_Exception - database error
+     */
+    public function setMessageStatus(Zend_Queue_Message $message, $status = null)
+    {
+        $db    = $this->_messageTable->getAdapter();
+        $where = $db->quoteInto('handle=?', $message->handle);
+
+        if (TM_Email_Model_Queue_Message_Status::isStatus($status)) {
+            $info      = $this->_messageTable->info();
+            $db->update($info['name'], array('status' => $status), $where);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Delete a message from the queue
      *
      * Returns true if the message is deleted, false if the deletion is
@@ -418,12 +443,8 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
      */
     protected function getQueueByName($name)
     {
-        if (array_key_exists($name, $this->_queues)) {
-            return $this->_queues[$name];
-        }
-
         $query = $this->_queueTable->select();
-        $query->from($this->_queueTable, array('queue_id'))
+        $query->from($this->_queueTable)
               ->where('queue_name=?', $name);
 
         $queue = $this->_queueTable->fetchRow($query);
@@ -450,10 +471,10 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
      */
     protected function getQueueId($name)
     {
-        $queue = $this->getQueueByName($name);
-
-        $this->_queues[$name] = (int)$queue->queue_id;
-
+        if (!array_key_exists($name, $this->_queues)) {
+            $queue = $this->getQueueByName($name);
+            $this->_queues[$name] = (int)$queue->queue_id;
+        }
         return $this->_queues[$name];
     }
 
@@ -470,7 +491,6 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
     protected function getQueueDefaultStatus($name)
     {
         $queue = $this->getQueueByName($name);
-
-        return (int)$queue->getDefaultStatus();
+        return (int)$queue->default_status;
     }
 }

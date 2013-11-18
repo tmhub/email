@@ -16,13 +16,12 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
 
     public function sendAction()
     {
-//        $_queues = Mage::getModel('tm_email/queue')->getQueue()->getQueues();
-//
-//        foreach ($_queues as $_queue) {
-//            Mage::getModel('tm_email/queue')
-//                ->setName($_queue)
-//                ->receive();
-//        }
+        $_queues = Mage::getModel('tm_email/queue')->getQueue()->getQueues();
+        foreach ($_queues as $_queue) {
+            Mage::getModel('tm_email/queue')
+                ->setName($_queue)
+                ->receive();
+        }
         $this->_redirect('*/*/index');
     }
 

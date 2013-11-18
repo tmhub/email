@@ -96,7 +96,9 @@ class TM_Email_Model_Queue //extends Zend_Queue
                     $status = false;
                 }
                 if ($status) {
-                    $queue->deleteMessage($message);
+                    $queue->getAdapter()->setMessageStatus(
+                        $message, TM_Email_Model_Queue_Message_Status::SUCCESS
+                    );
                 }
             }
         } catch (Exception $e) {

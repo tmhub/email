@@ -18,4 +18,11 @@ class TM_Email_Model_Queue_Message_Status
             self::FAILURE     => Mage::helper('tm_email')->__('Failure'),
         );
     }
+
+    public static function isStatus($status)
+    {
+        return in_array($status, array(
+            self::DISAPPROVED, self::APPROVED,  self::SUCCESS, self::FAILURE
+        ));
+    }
 }
