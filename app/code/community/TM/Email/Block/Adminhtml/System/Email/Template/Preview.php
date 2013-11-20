@@ -17,6 +17,8 @@ class TM_Email_Block_Adminhtml_System_Email_Template_Preview extends Mage_Adminh
         if (!$message) {
             return;
         }
+        //Zend_Debug::dump($message->getData());
+
         $mail = $message->getMail();
         if (!$mail) {
             return;
@@ -32,6 +34,35 @@ class TM_Email_Block_Adminhtml_System_Email_Template_Preview extends Mage_Adminh
         if ('quoted-printable' == $mail->getHeaderEncoding()) {
             $content = quoted_printable_decode($content);
         }
-        return $content;
+        $toolbar = "<div class='filter-actions form-buttons' style='float:right;clear:both'>";
+        $status = (int)$message->getStatus();
+        if (TM_Email_Model_Queue_Message_Status::APPROVED !== $status) {
+            $toolbar .= $this->getButtonHtml(
+                Mage::helper('tm_email')->__('Approve'),
+                "Windows.close('grid-action-changes', event);" .
+                "setLocation('" . $this->getUrl('*/*/status', array(
+                    'message_id' => $id,
+                    'status' => TM_Email_Model_Queue_Message_Status::APPROVED,
+
+                )) . "')",
+                'save'
+            );
+        }
+        if (TM_Email_Model_Queue_Message_Status::DISAPPROVED !== $status) {
+            $toolbar .= $this->getButtonHtml(
+                Mage::helper('tm_email')->__('Disapprove'),
+                "Windows.close('grid-action-changes', event);" .
+                "setLocation('" . $this->getUrl('*/*/status', array(
+                    'message_id' => $id,
+                    'status' => TM_Email_Model_Queue_Message_Status::DISAPPROVED,
+
+                )) . "')",
+                'delete'
+            );
+
+        }
+        $toolbar .= '</div>';
+
+        return $toolbar . $content;
     }
 }

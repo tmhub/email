@@ -25,6 +25,28 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
         $this->_redirect('*/*/index');
     }
 
+    public function statusAction()
+    {
+        $request = $this->getRequest();
+        $_id = $request->getParam('message_id');
+        $status = $request->getParam('status');
+        if (!TM_Email_Model_Queue_Message_Status::isStatus($status)) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('tm_email')->__('Status was not successfully changed')
+            );
+
+        } else {
+            Mage::getSingleton('tm_email/queue_message')
+                ->load($_id)
+                ->setStatus($status)
+                ->save();
+            $this->_getSession()->addSuccess(
+                Mage::helper('tm_email')->__('Status were successfully updated')
+            );
+        }
+        $this->_redirectReferer();
+    }
+
     public function massStatusAction()
     {
         $request = $this->getRequest();
@@ -46,7 +68,7 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
                         ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    Mage::helper('helpmate')->__(
+                    Mage::helper('email')->__(
                         'Total of %d record(s) were successfully updated',
                         count($_ids)
                     )
