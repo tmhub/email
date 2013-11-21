@@ -97,7 +97,7 @@
             </updates>
         </layout>
 
-<!--        <translate>
+        <translate>
             <modules>
                 <TM_Email>
                     <files>
@@ -105,7 +105,7 @@
                     </files>
                 </TM_Email>
             </modules>
-        </translate>-->
+        </translate>
     </adminhtml>
 
     <crontab>

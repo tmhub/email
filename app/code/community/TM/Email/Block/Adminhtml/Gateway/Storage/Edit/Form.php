@@ -109,9 +109,7 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
             'label'     => Mage::helper('tm_email')->__('Port'),
             'class'     => 'required-entry',
             'required'  => true,
-            'note'      => Mage::helper('tm_email')->__(
-                '110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default'
-            ),
+            'note'      => Mage::helper('tm_email')->__('110 for POP3, 995 for POP3-SSL, 143 for IMAP-TLS and 993 for IMAP-SSL by default'),
             'name'      => 'port',
         ));
 

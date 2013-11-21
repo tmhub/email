@@ -35,9 +35,8 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
         $type = $this->getType();
         if (self::TYPE_SMTP != $type) {
 //            throw new Exception(
-//               Mage::helper('tm_email')->__(
-//                   'Protocol type incorrect'
-//           ));
+//               Mage::helper('tm_email')->__('Protocol type incorrect'
+//            ));
             ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
             ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
 

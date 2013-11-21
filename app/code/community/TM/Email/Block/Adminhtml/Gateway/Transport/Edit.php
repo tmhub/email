@@ -24,8 +24,8 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit extends Mage_Adminhtml_Blo
         $item = Mage::registry('tm_email_gateway_transport_data');
         if($item && $item->getId()) {
 
-            return Mage::helper('tm_email')->__(
-                "Edit Email Transport '%s'", $this->htmlEscape($item->getName())
+            return Mage::helper('tm_email')->__("Edit Email Transport '%s'",
+                $this->htmlEscape($item->getName())
             );
 
         } else {

@@ -109,9 +109,7 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             'label'     => Mage::helper('tm_email')->__('Port'),
             'class'     => 'required-entry',
             'required'  => true,
-            'note'      => Mage::helper('tm_email')->__(
-                '25 and 587 (465) for SMTP by default'
-            ),
+            'note'      => Mage::helper('tm_email')->__('25 and 587 (465) for SMTP by default'),
             'name'      => 'port',
         ));
 

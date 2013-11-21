@@ -24,9 +24,7 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit extends Mage_Adminhtml_Block
         $item = Mage::registry('tm_email_gateway_storage_data');
         if($item && $item->getId()) {
 
-            return Mage::helper('tm_email')->__(
-                "Edit Email Gateway '%s'", $this->htmlEscape($item->getName())
-            );
+            return Mage::helper('tm_email')->__("Edit Email Gateway '%s'", $this->htmlEscape($item->getName()));
 
         } else {
             return Mage::helper('tm_email')->__('Add New Email Storage Gateway');

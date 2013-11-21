@@ -1,0 +1,33 @@
+{
+    "name": "tm/email",
+    "type": "magento-module",
+    "homepage": "https://github.com/tmhub/email",
+    "license": "OSL-3.0",
+    "description": "Templates Master Email module",
+    "version": "0.1.0",
+    "authors": [
+        {
+        "name": "Template Masters Team",
+        "email": "support@templates-master.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*",
+        "tm/core": "*"
+    },
+    "repositories": [
+        {
+        "type": "composer",
+        "url": "http://tmhub.github.io/packages/"
+        }
+    ],
+    "extra": {
+        "map": [
+            ["app/code/community/TM/Email", "app/code/community/TM/Email"],
+            ["app/design/adminhtml/default/default/layout/tm/email.xml", "app/design/adminhtml/default/default/layout/tm/email.xml"],
+            ["app/etc/modules/TM_Email.xml", "app/etc/modules/TM_Email.xml"],
+            ["app/locale/en_US/TM_Email.csv", "app/locale/en_US/TM_Email.csv"]
+        ],
+        "changelog": ""
+    }
+}

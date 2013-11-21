@@ -78,9 +78,7 @@ class TM_Email_Adminhtml_Gateway_TransportController extends Mage_Adminhtml_Cont
 
 //            $transport->countMessages();
             Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('tm_email')->__(
-                    'Connection with mail server was succesfully established. Please check your inbox to verify this final.'
-                )
+                Mage::helper('tm_email')->__('Connection with mail server was succesfully established. Please check your inbox to verify this final.')
             );
         } catch (Zend_Exception $e) {
 

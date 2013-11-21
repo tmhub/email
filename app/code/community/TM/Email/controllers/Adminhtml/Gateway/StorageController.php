@@ -68,9 +68,7 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
             $storage  = $modelStorage->getStorage();
             $storage->countMessages();
             Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('tm_email')->__(
-                    'Connection with mail server was succesfully established'
-                )
+                Mage::helper('tm_email')->__('Connection with mail server was succesfully established')
             );
         } catch (Zend_Exception $e) {
 

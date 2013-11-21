@@ -45,8 +45,7 @@ class TM_Email_Model_Gateway_Storage extends Mage_Core_Model_Abstract
             $class = 'Zend_Mail_Storage_Imap';
         } else {
            throw new Exception(
-               Mage::helper('tm_email')->__(
-                   'Protocol type incorrect'
+               Mage::helper('tm_email')->__('Protocol type incorrect'
            ));
         }
         $config = array(

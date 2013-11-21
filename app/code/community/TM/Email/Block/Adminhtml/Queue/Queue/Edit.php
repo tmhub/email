@@ -27,9 +27,10 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Edit extends Mage_Adminhtml_Block_Wid
         if(Mage::registry('tm_email_queue_data')
             && Mage::registry('tm_email_queue_data')->getQueueId()) {
 
-            return Mage::helper('tm_email')->__(
-                "Edit Email Queue '%s'",
-                $this->htmlEscape(Mage::registry('tm_email_queue_data')->getQueueName())
+            return Mage::helper('tm_email')->__("Edit Email Queue '%s'",
+                $this->htmlEscape(
+                    Mage::registry('tm_email_queue_data')->getQueueName()
+                )
             );
 
         } else {
