@@ -48,6 +48,7 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'email',
+            'note'      => Mage::helper('tm_email')->__('For Helpmate users: PLEASE NOTICE THAT ALL EMAILS AT THIS ADDRESS WILL BE DELETED IN INITIAL E-MAIL PROCESSING. THIS EMAIL SHOULD NOT USED BY ANY OTHER EMAIL SOFTWARE'),
         ));
 
         $fieldset->addField('status', 'select', array(
