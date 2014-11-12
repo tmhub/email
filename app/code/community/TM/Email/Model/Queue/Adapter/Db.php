@@ -42,22 +42,27 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
             throw new Zend_Queue_Exception('Options array item: Zend_Db_Select::FOR_UPDATE must be boolean');
         }
 
+        $coreResource = Mage::getSingleton('core/resource');
+
         if (isset($this->_options['dbAdapter'])
             && $this->_options['dbAdapter'] instanceof Zend_Db_Adapter_Abstract) {
             $db = $this->_options['dbAdapter'];
         } else {
-            $db = Mage::getSingleton('core/resource')
-                ->getConnection('core_write');
+            $db = $coreResource->getConnection('core_write');
         }
 
+        $queueTableName = $coreResource->getTableName('tm_email_queue_queue');
         $this->_queueTable = new TM_Email_Model_Queue_Adapter_Db_Queue(array(
+            'name' => $queueTableName,
             'db' => $db,
         ));
 
+        $messageTableName = $coreResource->getTableName('tm_email_queue_queue');
         $this->_messageTable = new TM_Email_Model_Queue_Adapter_Db_Message(array(
+            'name' => $messageTableName,
             'db' => $db,
         ));
-
+        
     }
 
     /********************************************************************
