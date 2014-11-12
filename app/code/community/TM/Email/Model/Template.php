@@ -39,7 +39,7 @@
  * @method Mage_Core_Model_Email_Template setOrigTemplateVariables(string $value)
  *
  */
-class TM_Email_Model_Template extends Mage_Core_Model_Email_Template
+class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 {
     /**
      *
