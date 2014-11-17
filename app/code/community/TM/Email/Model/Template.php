@@ -194,6 +194,7 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
         $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
 
         try {
+            $this->_beforeSend($transport, $mail);
             if (empty($this->_queueName)) {
                 $mail->send($transport);
             } else {
