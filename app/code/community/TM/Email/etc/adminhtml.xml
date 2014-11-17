@@ -57,17 +57,17 @@
         <resources>
             <admin>
                 <children>
-<!--                    <system>
+                    <system>
                         <children>
                             <config>
                                 <children>
                                     <tm_email translate="title" module="tm_email">
-                                        <title>Helpmate Section</title>
+                                        <title>Email Section</title>
                                     </tm_email>
                                 </children>
                             </config>
                         </children>
-                    </system>-->
+                    </system>
                     <templates_master>
                         <title>Templates Master</title>
                         <sort_order>71</sort_order>

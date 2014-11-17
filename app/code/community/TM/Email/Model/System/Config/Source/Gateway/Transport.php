@@ -13,7 +13,7 @@ class TM_Email_Model_System_Config_Source_Gateway_Transport
         $return = array();
         $return[] = array(
             'value' => '',
-            'label' => ''
+            'label' => Mage::helper('tm_email')->__('Default Sendmail Sender')
         );
 
         return array_merge(
