@@ -9,7 +9,7 @@ class TM_Email_Model_Queue_Message_Status
     *
     * @return array
     */
-    public function getOptionArray()
+    public function toOptionHash()
     {
         return array(
             self::DISAPPROVED => Mage::helper('tm_email')->__('Disapproved'),

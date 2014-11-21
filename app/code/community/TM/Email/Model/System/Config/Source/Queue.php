@@ -10,14 +10,12 @@ class TM_Email_Model_System_Config_Source_Queue
      */
     public function toOptionArray()
     {
-        $return = array();
-        $return[] = array(
+        $return = Mage::getModel('tm_email/queue_queue')->toOptionArray();
+        array_unshift($return, array(
             'value' => '',
             'label' => ''
-        );
+        ));
 
-        return array_merge(
-            $return, Mage::getModel('tm_email/queue_queue')->getOptionArray()
-        );
+        return $return;
     }
 }

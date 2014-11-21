@@ -10,14 +10,12 @@ class TM_Email_Model_System_Config_Source_Gateway_Storage
      */
     public function toOptionArray()
     {
-        $return = array();
-        $return[] = array(
+        $return = Mage::getModel('tm_email/gateway_storage')->toOptionArray();
+        array_unshift($return, array(
             'value' => '',
             'label' => ''
-        );
+        ));
 
-        return array_merge(
-            $return, Mage::getModel('tm_email/gateway_storage')->getOptionArray()
-        );
+        return $return;
     }
 }

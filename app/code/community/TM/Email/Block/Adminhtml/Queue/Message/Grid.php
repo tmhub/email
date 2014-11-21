@@ -29,7 +29,7 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
           'type'      => 'number'
         ));
 
-        $queues = Mage::getModel('tm_email/queue_queue')->getOptionArray();
+        $queues = Mage::getModel('tm_email/queue_queue')->toOptionHash();
         $this->addColumn('queue_id', array(
             'header'    => Mage::helper('tm_email')->__('Queue'),
             'align'     => 'left',
@@ -92,7 +92,7 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
             'width'   => '80px',
             'index'   => 'status',
             'type'    => 'options',
-            'options' => Mage::getSingleton('tm_email/queue_message_status')->getOptionArray(),
+            'options' => Mage::getSingleton('tm_email/queue_message_status')->toOptionHash(),
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
@@ -121,7 +121,7 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
              'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
         ));
 
-        $_statuses = Mage::getSingleton('tm_email/queue_message_status')->getOptionArray();
+        $_statuses = Mage::getSingleton('tm_email/queue_message_status')->toOptionHash();
         $statuses = array();
         foreach ($_statuses as $_value => $_label) {
             $statuses[] = array('label' => $_label, 'value' => $_value);

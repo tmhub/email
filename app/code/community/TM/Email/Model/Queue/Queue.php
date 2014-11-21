@@ -7,8 +7,13 @@ class TM_Email_Model_Queue_Queue extends Mage_Core_Model_Abstract
         $this->_init('tm_email/queue_queue');
     }
 
-    public function getOptionArray()
+    public function toOptionArray()
     {
-        return $this->_getResource()->getOptionArray();
+        return $this->_getResource()->toOptionArray();
+    }
+
+    public function toOptionHash()
+    {
+        return $this->_getResource()->toOptionHash();
     }
 }

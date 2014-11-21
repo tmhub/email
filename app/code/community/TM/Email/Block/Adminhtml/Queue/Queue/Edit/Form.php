@@ -56,7 +56,7 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Edit_Form extends Mage_Adminhtml_Bloc
             'title'    => Mage::helper('tm_email')->__('Default Status'),
             'name'     => 'default_status',
             'required' => true,
-            'options'  => Mage::getSingleton('tm_email/queue_message_status')->getOptionArray(),
+            'options'  => Mage::getSingleton('tm_email/queue_message_status')->toOptionHash(),
         ));
 
         $form->setValues($data);

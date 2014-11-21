@@ -14,9 +14,14 @@ class TM_Email_Model_Gateway_Storage extends Mage_Core_Model_Abstract
         $this->_init('tm_email/gateway_storage');
     }
 
-    public function getOptionArray()
+    public function toOptionArray()
     {
-        return $this->_getResource()->getOptionArray();
+        return $this->_getResource()->toOptionArray();
+    }
+
+    public function toOptionHash()
+    {
+        return $this->_getResource()->toOptionHash();
     }
 
     public function getSsl()

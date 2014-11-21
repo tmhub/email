@@ -49,7 +49,7 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Grid extends Mage_Adminhtml_Block_Wid
             'width'   => '80px',
             'index'   => 'default_status',
             'type'    => 'options',
-            'options' => Mage::getSingleton('tm_email/queue_message_status')->getOptionArray()
+            'options' => Mage::getSingleton('tm_email/queue_message_status')->toOptionHash()
         ));
 
         $this->addColumn('action', array(
