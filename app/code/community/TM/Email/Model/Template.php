@@ -51,6 +51,12 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
     /**
      *
+     * @var Zend_Mail_Transport_Abstract
+     */
+    protected $_transport = null;
+
+    /**
+     *
      * @param string $name
      * @return \TM_Email_Model_Template
      */
@@ -85,7 +91,7 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
      */
     public function setTransport(Zend_Mail_Transport_Abstract $transport)
     {
-        Zend_Mail::setDefaultTransport($transport);
+        $this->_transport = $transport;
         return $this;
     }
 
@@ -95,48 +101,16 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
      */
     public function getTransport()
     {
-        $transport = Zend_Mail::getDefaultTransport();
+        if (!$this->_transport instanceof Zend_Mail_Transport_Abstract) {
 
-        if (!$transport instanceof Zend_Mail_Transport_Abstract) {
-
-            $transportId = Mage::getStoreConfig(self::CONFIG_DEFAULT_TRANSPORT);
-            if (!empty($transportId)) {
-                $_transport = Mage::getModel('tm_email/gateway_transport')
-                    ->load($transportId)
-                ;
-                if ($_transport->getId()) {
-                    $transport = $_transport->getTransport();
-                    if ($transport instanceof Zend_Mail_Transport_Abstract) {
-                        return $transport;
-                    }
-                }
-            }
-
-            ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
-            ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
-
-            $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH);
-            switch ($setReturnPath) {
-                case 1:
-                    $returnPathEmail = $this->getSenderEmail();
-                    break;
-                case 2:
-                    $returnPathEmail = Mage::getStoreConfig(self::XML_PATH_SENDING_RETURN_PATH_EMAIL);
-                    break;
-                default:
-                    $returnPathEmail = null;
-                    break;
-            }
-
-            if ($returnPathEmail !== null) {
-                $transport = new Zend_Mail_Transport_Sendmail("-f".$returnPathEmail);
-//                Zend_Mail::setDefaultTransport($mailTransport);
-            } else {
-                $transport = new Zend_Mail_Transport_Sendmail();
-            }
+            $config = self::CONFIG_DEFAULT_TRANSPORT;
+            $transportId = (int) Mage::getStoreConfig($config);
+            $this->_transport = Mage::getModel('tm_email/gateway_transport')
+                ->getTransport($transportId)
+            ;
         }
-        
-        return $transport;
+
+        return $this->_transport;
     }
 
     /**
@@ -166,8 +140,6 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
         $variables['email'] = reset($emails);
         $variables['name'] = reset($names);
 
-        $transport = $this->getTransport();
-
         $mail = $this->getMail();
 
         foreach ($emails as $key => $email) {
@@ -194,6 +166,8 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
         $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
 
         try {
+            $transport = $this->getTransport();
+            
             $this->_beforeSend($transport, $mail);
             if (empty($this->_queueName)) {
                 $mail->send($transport);
