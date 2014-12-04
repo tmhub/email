@@ -105,7 +105,9 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
             $config = self::CONFIG_DEFAULT_TRANSPORT;
             $transportId = (int) Mage::getStoreConfig($config);
-            $this->_transport = Mage::getModel('tm_email/gateway_transport')
+            $modelTransport = Mage::getModel('tm_email/gateway_transport');
+            $this->_transport = $modelTransport
+                ->setSenderEmail($this->getSenderEmail())
                 ->getTransport($transportId)
             ;
             Zend_Mail::setDefaultTransport($this->_transport);

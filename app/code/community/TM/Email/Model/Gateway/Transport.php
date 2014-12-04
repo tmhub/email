@@ -42,6 +42,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
      */
     public function getTransport($id = null)
     {
+        $senderEmail = $this->getSenderEmail();
         if (null !== $id) {
             $this->load($id);
         }
@@ -79,7 +80,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
                 );
                 switch ($setReturnPath) {
                     case 1:
-                        $returnPathEmail = $this->getSenderEmail();
+                        $returnPathEmail = $senderEmail;
                         break;
                     case 2:
                         $returnPathEmail = Mage::getStoreConfig(
