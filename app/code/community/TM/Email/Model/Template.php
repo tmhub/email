@@ -108,9 +108,28 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
             $this->_transport = Mage::getModel('tm_email/gateway_transport')
                 ->getTransport($transportId)
             ;
+            Zend_Mail::setDefaultTransport($this->_transport);
         }
 
         return $this->_transport;
+    }
+
+    protected function _getReturnPathEmail()
+    {
+        $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH);
+        switch ($setReturnPath) {
+            case 1:
+                $returnPathEmail = $this->getSenderEmail();
+                break;
+            case 2:
+                $returnPathEmail = Mage::getStoreConfig(self::XML_PATH_SENDING_RETURN_PATH_EMAIL);
+                break;
+            default:
+                $returnPathEmail = null;
+                break;
+        }
+
+        return $returnPathEmail;
     }
 
     /**
@@ -140,15 +159,38 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
         $variables['email'] = reset($emails);
         $variables['name'] = reset($names);
 
+        $this->setUseAbsoluteLinks(true);
+        $variables['boundary'] = $boundary = strtoupper(uniqid('--boundary_'));//'--BOUNDARY_TEXT_OF_CHOICE';
+        $text = $this->getProcessedTemplate($variables, true);
+        $subject = $this->getProcessedTemplateSubject($variables);
+
+        $returnPathEmail = $this->_getReturnPathEmail();
+
+        if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
+            /** @var $emailQueue Mage_Core_Model_Email_Queue */
+            $emailQueue = $this->getQueue();
+            $emailQueue->setMessageBody($text);
+            $emailQueue->setMessageParameters(array(
+                    'subject'           => $subject,
+                    'return_path_email' => $returnPathEmail,
+                    'is_plain'          => $this->isPlain(),
+                    'from_email'        => $this->getSenderEmail(),
+                    'from_name'         => $this->getSenderName(),
+                    'reply_to'          => $this->getMail()->getReplyTo(),
+                    'return_to'         => $this->getMail()->getReturnPath(),
+                ))
+                ->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
+                ->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
+            $emailQueue->addMessageToQueue();
+
+            return true;
+        }
+
         $mail = $this->getMail();
 
         foreach ($emails as $key => $email) {
             $mail->addTo($email, '=?utf-8?B?' . base64_encode($names[$key]) . '?=');
         }
-
-        $this->setUseAbsoluteLinks(true);
-        $variables['boundary'] = $boundary = strtoupper(uniqid('--boundary_'));//'--BOUNDARY_TEXT_OF_CHOICE';
-        $text = $this->getProcessedTemplate($variables, true);
 
         if($this->isPlain()) {
             $mail->setBodyText($text);
@@ -162,7 +204,7 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
             $mail->setBodyHTML($text);
         }
 
-        $mail->setSubject('=?utf-8?B?' . base64_encode($this->getProcessedTemplateSubject($variables)) . '?=');
+        $mail->setSubject('=?utf-8?B?' . base64_encode($subject) . '?=');
         $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
 
         try {
