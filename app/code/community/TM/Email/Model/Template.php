@@ -57,6 +57,23 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
     /**
      *
+     * @var int
+     */
+    protected $_storeId = null;
+
+    /**
+     *
+     * @param int $storeId
+     * @return \TM_Email_Model_Template
+     */
+    public function setStoreId($storeId)
+    {
+        $this->_storeId = $storeId;
+        return $this;
+    }
+
+    /**
+     *
      * @param string $name
      * @return \TM_Email_Model_Template
      */
@@ -104,7 +121,7 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
         if (!$this->_transport instanceof Zend_Mail_Transport_Abstract) {
 
             $config = self::CONFIG_DEFAULT_TRANSPORT;
-            $transportId = (int) Mage::getStoreConfig($config);
+            $transportId = (int) Mage::getStoreConfig($config, $this->_storeId);
             $modelTransport = Mage::getModel('tm_email/gateway_transport');
             $this->_transport = $modelTransport
                 ->setSenderEmail($this->getSenderEmail())
@@ -118,13 +135,13 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
     protected function _getReturnPathEmail()
     {
-        $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH);
+        $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH, $this->_storeId);
         switch ($setReturnPath) {
             case 1:
                 $returnPathEmail = $this->getSenderEmail();
                 break;
             case 2:
-                $returnPathEmail = Mage::getStoreConfig(self::XML_PATH_SENDING_RETURN_PATH_EMAIL);
+                $returnPathEmail = Mage::getStoreConfig(self::XML_PATH_SENDING_RETURN_PATH_EMAIL, $this->_storeId);
                 break;
             default:
                 $returnPathEmail = null;
