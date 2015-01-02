@@ -20,14 +20,5 @@
         "type": "composer",
         "url": "http://tmhub.github.io/packages/"
         }
-    ],
-    "extra": {
-        "map": [
-            ["app/code/community/TM/Email", "app/code/community/TM/Email"],
-            ["app/design/adminhtml/default/default/layout/tm/email.xml", "app/design/adminhtml/default/default/layout/tm/email.xml"],
-            ["app/etc/modules/TM_Email.xml", "app/etc/modules/TM_Email.xml"],
-            ["app/locale/en_US/TM_Email.csv", "app/locale/en_US/TM_Email.csv"]
-        ],
-        "changelog": ""
-    }
+    ]
 }
