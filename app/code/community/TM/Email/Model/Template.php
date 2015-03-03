@@ -228,8 +228,10 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
         try {
             $transport = $this->getTransport();
-            
-            $this->_beforeSend($transport, $mail);
+
+            if (method_exists($this, '_beforeSend')) {
+                $this->_beforeSend($transport, $mail);
+            }
             if (empty($this->_queueName)) {
                 $mail->send($transport);
             } else {
