@@ -213,4 +213,15 @@ class TM_Email_Adminhtml_Gateway_TransportController extends Mage_Adminhtml_Cont
         $response->sendResponse();
         die;
     }
+
+    /**
+     * Check the permission to run it
+     *
+     * @return boolean
+     */
+    protected function _isAllowed()
+    {
+       return Mage::getSingleton('admin/session')
+           ->isAllowed('templates_master/tm_email/gateway');
+    }
 }

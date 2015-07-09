@@ -174,4 +174,15 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
         $response->sendResponse();
         die;
     }
+
+    /**
+     * Check the permission to run it
+     *
+     * @return boolean
+     */
+    protected function _isAllowed()
+    {
+       return Mage::getSingleton('admin/session')
+           ->isAllowed('templates_master/tm_email/queue');
+    }
 }
