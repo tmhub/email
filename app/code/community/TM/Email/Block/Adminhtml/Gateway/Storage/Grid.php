@@ -91,8 +91,8 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Grid extends Mage_Adminhtml_Block
           'type'      => 'options',
           'options'   => array(
                 0     => Mage::helper('tm_email')->__('None'),
-                1     => Mage::helper('tm_email')->__('SSL/TLS'),
-                2     => Mage::helper('tm_email')->__('STARTTLS')
+                1     => Mage::helper('tm_email')->__('SSL'),
+                2     => Mage::helper('tm_email')->__('TLS')
             )
         ));
 

@@ -125,11 +125,11 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
                 ),
                 array(
                     'value'     => 1,
-                    'label'     => Mage::helper('tm_email')->__('SSL/TLS'),
+                    'label'     => Mage::helper('tm_email')->__('SSL'),
                 ),
                 array(
                     'value'     => 2,
-                    'label'     => Mage::helper('tm_email')->__('STARTTLS'),
+                    'label'     => Mage::helper('tm_email')->__('TLS'),
                 )
             ),
         ));
