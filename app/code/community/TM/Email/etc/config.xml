@@ -121,4 +121,11 @@
         </jobs>
     </crontab>
 
+    <default>
+        <subscriptionchecker>
+            <ignored_sections>
+                <tm_email/>
+            </ignored_sections>
+        </subscriptionchecker>
+    </default>
 </config>
