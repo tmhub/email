@@ -211,8 +211,8 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
             $mail->addTo($email, '=?utf-8?B?' . base64_encode($names[$key]) . '?=');
         }
 
-        echo($text);
-        die;
+        // echo($text);
+        // die;
         if($this->isPlain()) {
             $mail->setBodyText($text);
         } elseif(strpos($text, $boundary)) {
