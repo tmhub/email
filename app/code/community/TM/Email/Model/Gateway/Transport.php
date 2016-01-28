@@ -69,7 +69,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
                 $transport = new Zend_Mail_Transport_Smtp($this->getHost(), $config);
 
                 break;
-            case self::TYPE_SMTP:
+            case self::TYPE_SENDMAIL:
             default:
 
                 ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
