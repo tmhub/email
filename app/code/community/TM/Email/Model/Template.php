@@ -185,25 +185,26 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
         $returnPathEmail = $this->_getReturnPathEmail();
 
-        if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
-            /** @var $emailQueue Mage_Core_Model_Email_Queue */
-            $emailQueue = $this->getQueue();
-            $emailQueue->setMessageBody($text);
-            $emailQueue->setMessageParameters(array(
-                    'subject'           => $subject,
-                    'return_path_email' => $returnPathEmail,
-                    'is_plain'          => $this->isPlain(),
-                    'from_email'        => $this->getSenderEmail(),
-                    'from_name'         => $this->getSenderName(),
-                    'reply_to'          => $this->getMail()->getReplyTo(),
-                    'return_to'         => $this->getMail()->getReturnPath(),
-                ))
-                ->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
-                ->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
-            $emailQueue->addMessageToQueue();
+        // comment magento core queue logic (AR-18)
+        // if ($this->hasQueue() && $this->getQueue() instanceof Mage_Core_Model_Email_Queue) {
+        //     /** @var $emailQueue Mage_Core_Model_Email_Queue */
+        //     $emailQueue = $this->getQueue();
+        //     $emailQueue->setMessageBody($text);
+        //     $emailQueue->setMessageParameters(array(
+        //             'subject'           => $subject,
+        //             'return_path_email' => $returnPathEmail,
+        //             'is_plain'          => $this->isPlain(),
+        //             'from_email'        => $this->getSenderEmail(),
+        //             'from_name'         => $this->getSenderName(),
+        //             'reply_to'          => $this->getMail()->getReplyTo(),
+        //             'return_to'         => $this->getMail()->getReturnPath(),
+        //         ))
+        //         ->addRecipients($emails, $names, Mage_Core_Model_Email_Queue::EMAIL_TYPE_TO)
+        //         ->addRecipients($this->_bccEmails, array(), Mage_Core_Model_Email_Queue::EMAIL_TYPE_BCC);
+        //     $emailQueue->addMessageToQueue();
 
-            return true;
-        }
+        //     return true;
+        // }
 
         $mail = $this->getMail();
 
