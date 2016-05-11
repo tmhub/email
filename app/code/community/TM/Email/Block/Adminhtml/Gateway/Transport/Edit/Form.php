@@ -67,21 +67,11 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                 )
             ),
         ));
-
         $fieldset->addField('type', 'select', array(
             'label'     => Mage::helper('tm_email')->__('Type'),
             'name'      => 'type',
             'required'  => true,
-            'values'    => array(
-//                array(
-//                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SENDMAIL,
-//                    'label'     => Mage::helper('tm_email')->__('Sendmail')
-//                ),
-                array(
-                    'value'     => TM_Email_Model_Gateway_Transport::TYPE_SMTP,
-                    'label'     => Mage::helper('tm_email')->__('Smtp')
-                )
-            ),
+            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Provider::toOptionArray()
         ));
 
         $fieldset->addField('host', 'text', array(
@@ -117,40 +107,14 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             'label'     => Mage::helper('tm_email')->__('Secure'),
             'name'      => 'secure',
             'required'  => true,
-            'values'    => array(
-                array(
-                    'value'     => 0,
-                    'label'     => Mage::helper('tm_email')->__('None'),
-                ),
-                array(
-                    'value'     => 1,
-                    'label'     => Mage::helper('tm_email')->__('SSL'),
-                ),
-                array(
-                    'value'     => 2,
-                    'label'     => Mage::helper('tm_email')->__('TLS'),
-                )
-            ),
+            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Secure::toOptionArray()
         ));
 
         $fieldset->addField('auth', 'select', array(
             'label'     => Mage::helper('tm_email')->__('Authorize Type'),
             'name'      => 'auth',
             'required'  => true,
-            'values'    => array(
-                array(
-                    'value'     => 'login',
-                    'label'     => Mage::helper('tm_email')->__('Login'),
-                ),
-                array(
-                    'value'     => 'plain',
-                    'label'     => Mage::helper('tm_email')->__('Plain'),
-                ),
-                array(
-                    'value'     => 'crammd5',
-                    'label'     => Mage::helper('tm_email')->__('Crammd5'),
-                )
-            ),
+            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Auth::toOptionArray()
         ));
 
         /*

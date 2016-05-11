@@ -3,6 +3,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
 {
     const TYPE_SENDMAIL = 0;
     const TYPE_SMTP     = 1;
+    // const TYPE_GMAIL    = 2;
 
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
