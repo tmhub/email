@@ -28,6 +28,8 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             $data = Mage::registry('tm_email_gateway_transport_data')->getData();
         }
 
+        $isNew = !isset($data['id']);
+
         $fieldset = $form->addFieldset(
             'gateway_general_form',
             array('legend' => Mage::helper('tm_email')->__('Email Transport Details'))
@@ -67,12 +69,105 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                 )
             ),
         ));
-        $fieldset->addField('type', 'select', array(
+
+        $el = $fieldset->addField('type', 'select', array(
             'label'     => Mage::helper('tm_email')->__('Type'),
             'name'      => 'type',
             'required'  => true,
-            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Provider::toOptionArray()
+            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Provider::toOptionArray(),
+            'onchange'  => $isNew ? 'fillDefaultProviderData(this)' : 'return false'
         ));
+
+        if ($isNew) {
+            $conf = array(
+                TM_Email_Model_Gateway_Transport::TYPE_AOL => array(
+                    'host'   => 'smtp.aol.com',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_COMCAST => array(
+                    'host'   => 'smtp.comcast.net',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_GMX => array(
+                    'host'   => 'mail.gmx.net',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_GMAIL => array(
+                    'host'   => 'smtp.gmail.com',
+                    'port'   => 465,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_HOTMAIL => array(
+                    'host'   => 'smtp.live.com',
+                    'port'   => 465,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_MAILCOM => array(
+                    'host'   => 'smtp.mail.com',
+                    'port'   => 465,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_O2 => array(
+                    'host'   => 'smtp.o2.ie',
+                    'port'   => 25,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_OFFICE365 => array(
+                    'host'   => 'smtp.office365.com',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_ORANGE => array(
+                    'host'   => 'smtp.orange.net',
+                    'port'   => 25,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_OUTLOOK => array(
+                    'host'   => 'smtp-mail.outlook.com',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_YAHOO => array(
+                    'host'   => 'smtp.mail.yahoo.com',
+                    'port'   => 465,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_ZOHO => array(
+                    'host'   => 'smtp.zoho.com',
+                    'port'   => 465,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                )
+            );
+            $el->setAfterElementHtml(
+                "<script type=\"text/javascript\">
+                    function fillDefaultProviderData(element)
+                    {
+                        var type = element.value, dataset = " . json_encode($conf) . ";
+                        if (dataset[type]) {
+                            \$H(dataset[type]).each(function(pair){
+                                $(pair.key).value = pair.value;
+                            });
+                        }
+                    }
+                </script>
+            ");
+        }
+
 
         $fieldset->addField('host', 'text', array(
             'label'     => Mage::helper('tm_email')->__('Host'),

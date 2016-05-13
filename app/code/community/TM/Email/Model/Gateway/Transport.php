@@ -1,13 +1,30 @@
 <?php
 class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
 {
-    const TYPE_SENDMAIL = 0;
-    const TYPE_SMTP     = 1;
-    // const TYPE_GMAIL    = 2;
+    const TYPE_SENDMAIL  = 0;
+    const TYPE_SMTP      = 1;
+
+    const TYPE_AOL       = 2;
+    const TYPE_COMCAST   = 3;
+    const TYPE_GMX       = 4;
+    const TYPE_GMAIL     = 5;
+    const TYPE_HOTMAIL   = 6;
+    const TYPE_MAILCOM   = 7;
+    const TYPE_MAILGUN   = 8;
+    const TYPE_O2        = 9;
+    const TYPE_OFFICE365 = 10;
+    const TYPE_ORANGE    = 11;
+    const TYPE_OUTLOOK   = 12;
+    const TYPE_YAHOO     = 13;
+    const TYPE_ZOHO      = 14;
 
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
     const SECURE_TLS  = 2;//'TLS';
+
+    const AUTH_LOGIN   = 'login';
+    const AUTH_PLAIN   = 'plain';
+    const AUTH_CRAMMD5 = 'crammd5';
 
     public function _construct()
     {
@@ -50,6 +67,19 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
         $type = $this->getType();
         switch ($type) {
             case self::TYPE_SMTP:
+            case self::TYPE_AOL:
+            case self::TYPE_COMCAST:
+            case self::TYPE_GMX:
+            case self::TYPE_GMAIL:
+            case self::TYPE_HOTMAIL:
+            case self::TYPE_MAILCOM:
+            case self::TYPE_MAILGUN:
+            case self::TYPE_O2:
+            case self::TYPE_OFFICE365:
+            case self::TYPE_ORANGE:
+            case self::TYPE_OUTLOOK:
+            case self::TYPE_YAHOO:
+            case self::TYPE_ZOHO:
                 $config = array();
 
                 $port = $this->getPort();
@@ -72,7 +102,6 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
                 break;
             case self::TYPE_SENDMAIL:
             default:
-
                 ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
                 ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
 
