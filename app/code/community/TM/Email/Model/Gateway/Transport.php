@@ -20,6 +20,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
 
     const TYPE_MANDRILL  = 15;
     const TYPE_AMAZONSES = 16;
+    const TYPE_SENDGRID  = 17;
 
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
@@ -84,6 +85,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
             case self::TYPE_YAHOO:
             case self::TYPE_ZOHO:
             case self::TYPE_MANDRILL:
+            case self::TYPE_SENDGRID:
                 $config = array();
 
                 $port = $this->getPort();

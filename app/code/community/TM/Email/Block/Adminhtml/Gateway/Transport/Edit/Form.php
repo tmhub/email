@@ -192,6 +192,15 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                     'user'    =>  'YOUR_AWS_ACCESS_KEY',
                     'password' => 'YOUR_AWS_PRIVATE_KEY',
                 ),
+                //https://sendgrid.com/docs/Integrate/Frameworks/zend.html
+                TM_Email_Model_Gateway_Transport::TYPE_SENDGRID => array(
+                    'host'   => 'smtp.sendgrid.net',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  'SendGrid Username',
+                    'password' => 'SendGrid Password',
+                ),
             );
             $el->setAfterElementHtml(
                 "<script type=\"text/javascript\">
