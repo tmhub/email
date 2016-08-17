@@ -18,6 +18,8 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
     const TYPE_YAHOO     = 13;
     const TYPE_ZOHO      = 14;
 
+    const TYPE_MANDRILL  = 15;
+
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
     const SECURE_TLS  = 2;//'TLS';
@@ -80,6 +82,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
             case self::TYPE_OUTLOOK:
             case self::TYPE_YAHOO:
             case self::TYPE_ZOHO:
+            case self::TYPE_MANDRILL:
                 $config = array();
 
                 $port = $this->getPort();

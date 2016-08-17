@@ -84,73 +84,106 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                     'host'   => 'smtp.aol.com',
                     'port'   => 587,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_COMCAST => array(
                     'host'   => 'smtp.comcast.net',
                     'port'   => 587,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_GMX => array(
                     'host'   => 'mail.gmx.net',
                     'port'   => 587,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_GMAIL => array(
                     'host'   => 'smtp.gmail.com',
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_HOTMAIL => array(
                     'host'   => 'smtp.live.com',
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_MAILCOM => array(
                     'host'   => 'smtp.mail.com',
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_O2 => array(
                     'host'   => 'smtp.o2.ie',
                     'port'   => 25,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_OFFICE365 => array(
                     'host'   => 'smtp.office365.com',
                     'port'   => 587,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_ORANGE => array(
                     'host'   => 'smtp.orange.net',
                     'port'   => 25,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_NONE,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_OUTLOOK => array(
                     'host'   => 'smtp-mail.outlook.com',
                     'port'   => 587,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_YAHOO => array(
                     'host'   => 'smtp.mail.yahoo.com',
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
-                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  '',
+                    'password' => '',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_ZOHO => array(
                     'host'   => 'smtp.zoho.com',
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
                     'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN
+                ),
+                //https://mandrill.zendesk.com/hc/en-us/articles/205582147-How-to-Send-with-PHPMailer
+                //https://mandrill.zendesk.com/hc/en-us/articles/205582137-How-to-Send-via-SMTP-with-Popular-Programming-Languages
+                TM_Email_Model_Gateway_Transport::TYPE_MANDRILL => array(
+                    'host'   => 'smtp.mandrillapp.com',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    // 'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  'MANDRILL_USERNAME',
+                    'password' => 'MANDRILL_APIKEY',
                 )
             );
             $el->setAfterElementHtml(

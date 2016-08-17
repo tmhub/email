@@ -20,7 +20,8 @@ class TM_Email_Model_System_Config_Source_Gateway_Transport_Provider
             TM_Email_Model_Gateway_Transport::TYPE_ORANGE    => 'Orange',
             TM_Email_Model_Gateway_Transport::TYPE_OUTLOOK   => 'Outlook',
             TM_Email_Model_Gateway_Transport::TYPE_YAHOO     => 'Yahoo!',
-            TM_Email_Model_Gateway_Transport::TYPE_ZOHO      => 'Zoho'
+            TM_Email_Model_Gateway_Transport::TYPE_ZOHO      => 'Zoho',
+            TM_Email_Model_Gateway_Transport::TYPE_MANDRILL  => 'Mandrill',
         );
     }
 
