@@ -17,14 +17,13 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
     {
         $id = $this->getRequest()->getParam('id');
         $form = new Varien_Data_Form(array(
-                'id' => 'edit_form',
-                'action' => $this->getUrl('*/*/save', array('id' => $id)),
-                'method' => 'post',
-            )
-        );
+            'id' => 'edit_form',
+            'action' => $this->getUrl('*/*/save', array('id' => $id)),
+            'method' => 'post',
+        ));
 
         $data = array();
-        if (Mage::registry('tm_email_gateway_transport_data') ) {
+        if (Mage::registry('tm_email_gateway_transport_data')) {
             $data = Mage::registry('tm_email_gateway_transport_data')->getData();
         }
 
@@ -109,8 +108,8 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                     'port'   => 465,
                     'secure' => TM_Email_Model_Gateway_Transport::SECURE_SSL,
                     'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
-                    'user'    =>  '',
-                    'password' => '',
+                    'user'    =>  'Gmail username',
+                    'password' => 'Gmail password',
                 ),
                 TM_Email_Model_Gateway_Transport::TYPE_HOTMAIL => array(
                     'host'   => 'smtp.live.com',
@@ -184,7 +183,15 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
                     'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
                     'user'    =>  'MANDRILL_USERNAME',
                     'password' => 'MANDRILL_APIKEY',
-                )
+                ),
+                TM_Email_Model_Gateway_Transport::TYPE_AMAZONSES => array(
+                    'host'   => 'email.us-east-1.amazonaws.com',
+                    'port'   => 587,
+                    'secure' => TM_Email_Model_Gateway_Transport::SECURE_TLS,
+                    'auth'   => TM_Email_Model_Gateway_Transport::AUTH_LOGIN,
+                    'user'    =>  'YOUR_AWS_ACCESS_KEY',
+                    'password' => 'YOUR_AWS_PRIVATE_KEY',
+                ),
             );
             $el->setAfterElementHtml(
                 "<script type=\"text/javascript\">

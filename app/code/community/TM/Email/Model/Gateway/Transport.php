@@ -19,6 +19,7 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
     const TYPE_ZOHO      = 14;
 
     const TYPE_MANDRILL  = 15;
+    const TYPE_AMAZONSES = 16;
 
     const SECURE_NONE = 0;//false;
     const SECURE_SSL  = 1;//'SSL';
@@ -101,6 +102,15 @@ class TM_Email_Model_Gateway_Transport extends Mage_Core_Model_Abstract
                 }
                 $config['auth'] = $this->getAuth();
                 $transport = new Zend_Mail_Transport_Smtp($this->getHost(), $config);
+
+                break;
+            case self::TYPE_AMAZONSES:
+                $user = $this->getUser();
+                $password = $this->getPassword();
+
+                $transport = new TM_Email_Model_Mail_Transport_AmazonSES(
+                    array('accessKey' => $user, 'privateKey' => $password)
+                );
 
                 break;
             case self::TYPE_SENDMAIL:

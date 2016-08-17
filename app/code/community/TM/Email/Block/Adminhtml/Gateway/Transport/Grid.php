@@ -22,74 +22,71 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Grid extends Mage_Adminhtml_Blo
     protected function _prepareColumns()
     {
         $this->addColumn('id', array(
-          'header'    => Mage::helper('tm_email')->__('ID'),
-          'align'     => 'right',
-          'width'     => '50px',
-          'index'     => 'id',
-          'type'      => 'number'
+            'header'    => Mage::helper('tm_email')->__('ID'),
+            'align'     => 'right',
+            'width'     => '50px',
+            'index'     => 'id',
+            'type'      => 'number'
         ));
 
         $this->addColumn('name', array(
-          'header'    => Mage::helper('tm_email')->__('Title'),
-          'align'     => 'left',
-          'index'     => 'name',
+            'header'    => Mage::helper('tm_email')->__('Title'),
+            'align'     => 'left',
+            'index'     => 'name',
         ));
 
         $this->addColumn('status', array(
-          'header'    => Mage::helper('tm_email')->__('Status'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'status',
-          'type'      => 'options',
-          'options'   => array(
+            'header'    => Mage::helper('tm_email')->__('Status'),
+            'align'     => 'left',
+            'width'     => '80px',
+            'index'     => 'status',
+            'type'      => 'options',
+            'options'   => array(
                 1     => Mage::helper('tm_email')->__('Enabled'),
                 0     => Mage::helper('tm_email')->__('Disabled')
             )
         ));
-
+        $types = TM_Email_Model_System_Config_Source_Gateway_Transport_Provider::toOptionHash();
         $this->addColumn('type', array(
-          'header'    => Mage::helper('tm_email')->__('Type'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'type',
-          'type'      => 'options',
-          'options'   => array(
-                0     => Mage::helper('tm_email')->__('Sendmail'),
-                1     => Mage::helper('tm_email')->__('Smtp')
-            )
+            'header'    => Mage::helper('tm_email')->__('Type'),
+            'align'     => 'left',
+            'width'     => '80px',
+            'index'     => 'type',
+            'type'      => 'options',
+            'options'   => $types
         ));
 
         $this->addColumn('email', array(
-          'header'    => Mage::helper('tm_email')->__('Email'),
-          'align'     => 'left',
-          'index'     => 'email',
+            'header'    => Mage::helper('tm_email')->__('Email'),
+            'align'     => 'left',
+            'index'     => 'email',
         ));
 
         $this->addColumn('host', array(
-          'header'    => Mage::helper('tm_email')->__('Host'),
-          'align'     => 'left',
-          'index'     => 'host',
+            'header'    => Mage::helper('tm_email')->__('Host'),
+            'align'     => 'left',
+            'index'     => 'host',
         ));
 
         $this->addColumn('user', array(
-          'header'    => Mage::helper('tm_email')->__('User'),
-          'align'     => 'left',
-          'index'     => 'user',
+            'header'    => Mage::helper('tm_email')->__('User'),
+            'align'     => 'left',
+            'index'     => 'user',
         ));
 
         $this->addColumn('port', array(
-          'header'    => Mage::helper('tm_email')->__('Port'),
-          'align'     => 'left',
-          'index'     => 'port',
+            'header'    => Mage::helper('tm_email')->__('Port'),
+            'align'     => 'left',
+            'index'     => 'port',
         ));
 
         $this->addColumn('secure', array(
-          'header'    => Mage::helper('tm_email')->__('Secure'),
-          'align'     => 'left',
-          'width'     => '80px',
-          'index'     => 'secure',
-          'type'      => 'options',
-          'options'   => array(
+            'header'    => Mage::helper('tm_email')->__('Secure'),
+            'align'     => 'left',
+            'width'     => '80px',
+            'index'     => 'secure',
+            'type'      => 'options',
+            'options'   => array(
                 0     => Mage::helper('tm_email')->__('None'),
                 1     => Mage::helper('tm_email')->__('SSL'),
                 2     => Mage::helper('tm_email')->__('TLS')
@@ -139,9 +136,9 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Grid extends Mage_Adminhtml_Blo
         $this->getMassactionBlock()->setFormFieldName('tm_email');
 
         $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('tm_email')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
+            'label'    => Mage::helper('tm_email')->__('Delete'),
+            'url'      => $this->getUrl('*/*/massDelete'),
+            'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
         ));
 
         return $this;
