@@ -57,12 +57,12 @@ class TM_Email_Model_Queue_Adapter_Db extends Zend_Queue_Adapter_AdapterAbstract
             'db' => $db,
         ));
 
-        $messageTableName = $coreResource->getTableName('tm_email_queue_queue');
+        $messageTableName = $coreResource->getTableName('tm_email_queue_message');
         $this->_messageTable = new TM_Email_Model_Queue_Adapter_Db_Message(array(
             'name' => $messageTableName,
             'db' => $db,
         ));
-        
+
     }
 
     /********************************************************************
