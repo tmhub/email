@@ -80,6 +80,7 @@ class TM_Email_Model_Queue //extends Zend_Queue
      */
     public function receive($maxMessages = null, $timeout = null)
     {
+        $status = false;
         try {
             $queue = $this->getQueue();
             /* @var $message Zend_Queue_Message */
@@ -96,9 +97,13 @@ class TM_Email_Model_Queue //extends Zend_Queue
                     $status = false;
                 }
                 if ($status) {
-                    $queue->getAdapter()->setMessageStatus(
-                        $message, TM_Email_Model_Queue_Message_Status::SUCCESS
-                    );
+                    $adapter = $queue->getAdapter();
+                    if ($adapter) {
+                        $adapter->setMessageStatus(
+                            $message,
+                            TM_Email_Model_Queue_Message_Status::SUCCESS
+                        );
+                    }
                 }
             }
         } catch (Exception $e) {
