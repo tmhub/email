@@ -52,6 +52,9 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             'name'      => 'email',
         ));
 
+        if ($isNew) {
+            $data['status'] = 1;
+        }
         $fieldset->addField('status', 'select', array(
             'label'     => Mage::helper('tm_email')->__('Status'),
             'name'      => 'status',
