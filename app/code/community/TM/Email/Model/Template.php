@@ -214,9 +214,9 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 
         // echo($text);
         // die;
-        if($this->isPlain()) {
+        if ($this->isPlain()) {
             $mail->setBodyText($text);
-        } elseif(strpos($text, $boundary)) {
+        } elseif (false !== strpos($text, $boundary)) {
             $_text = substr($text, 0, strpos($text, $boundary));
             $_html = str_replace($boundary, '', substr($text, strpos($text, $boundary)));
 

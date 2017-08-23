@@ -1,5 +1,5 @@
 <?php
-if (Mage::helper('core')->isModuleOutputEnabled('Aschroder_SMTPPro')) {
+/*if (Mage::helper('core')->isModuleOutputEnabled('Aschroder_SMTPPro')) {
     class TM_Email_Model_Template_Abstract extends Aschroder_SMTPPro_Model_Email_Template
     {
         protected function _beforeSend(&$transport, $mail)
@@ -21,10 +21,11 @@ if (Mage::helper('core')->isModuleOutputEnabled('Aschroder_SMTPPro')) {
 
     }
 } else {
-    class TM_Email_Model_Template_Abstract extends Mage_Core_Model_Email_Template 
+    */
+class TM_Email_Model_Template_Abstract extends Mage_Core_Model_Email_Template
+{
+    protected function _beforeSend($transport, $mail)
     {
-        protected function _beforeSend($transport, $mail)
-        {
-        }
     }
 }
+// }

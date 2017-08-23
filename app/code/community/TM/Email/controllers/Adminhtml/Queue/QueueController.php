@@ -55,13 +55,13 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
         $data = $this->getRequest()->getPost();
 
         if (!$data) {
-             Mage::getSingleton('adminhtml/session')->addError(
+            Mage::getSingleton('adminhtml/session')->addError(
                 Mage::helper('tm_email')->__('Unable to find item to save')
             );
             $this->_redirect('*/*/');
         }
 
-        try  {
+        try {
             $model = Mage::getModel('tm_email/queue_queue');
 
             if (empty($data['queue_id'])) {
@@ -87,7 +87,8 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             Mage::getSingleton('adminhtml/session')->setFormData($data);
             $this->_redirect(
-                '*/*/edit', array('id' => $this->getRequest()->getParam('id'))
+                '*/*/edit',
+                array('id' => $this->getRequest()->getParam('id'))
             );
             return;
         }
@@ -96,7 +97,7 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
     public function deleteAction()
     {
         $_id = $this->getRequest()->getParam('id');
-        if( 0 < $_id) {
+        if (0 < $_id) {
             try {
                 $model = Mage::getModel('tm_email/queue_queue');
 
@@ -117,7 +118,7 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
     public function massDeleteAction()
     {
         $_ids = $this->getRequest()->getParam('tm_email');
-        if(!is_array($_ids)) {
+        if (!is_array($_ids)) {
             Mage::getSingleton('adminhtml/session')
                 ->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
@@ -128,7 +129,8 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d record(s) were successfully deleted', count($_ids)
+                        'Total of %d record(s) were successfully deleted',
+                        count($_ids)
                     )
                 );
             } catch (Exception $e) {
@@ -162,7 +164,7 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
         $fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();
-        $response->setHeader('HTTP/1.1 200 OK','');
+        $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);
         $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
         $response->setHeader('Content-Disposition', 'attachment; filename=' . $fileName);
@@ -172,7 +174,6 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
         $response->setHeader('Content-type', $contentType);
         $response->setBody($content);
         $response->sendResponse();
-        die;
     }
 
     /**

@@ -64,14 +64,12 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
         $modelStorage->setData($data);
 
         try {
-
             $storage  = $modelStorage->getStorage();
             $storage->countMessages();
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 Mage::helper('tm_email')->__('Connection with mail server was succesfully established')
             );
         } catch (Zend_Exception $e) {
-
             Mage::getSingleton('adminhtml/session')->addError(
                 $e->getMessage()
             );
@@ -86,13 +84,13 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
         $data = $this->getRequest()->getPost();
 
         if (!$data) {
-             Mage::getSingleton('adminhtml/session')->addError(
+            Mage::getSingleton('adminhtml/session')->addError(
                 Mage::helper('tm_email')->__('Unable to find item to save')
             );
             $this->_redirect('*/*/');
         }
 
-        try  {
+        try {
             $storage = Mage::getModel('tm_email/gateway_storage');
 
             if (empty($data['id'])) {
@@ -125,7 +123,7 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
     public function deleteAction()
     {
         $_id = $this->getRequest()->getParam('id');
-        if( 0 < $_id) {
+        if (0 < $_id) {
             try {
                 $storage = Mage::getModel('tm_email/gateway_storage');
 
@@ -146,7 +144,7 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
     public function massDeleteAction()
     {
         $_ids = $this->getRequest()->getParam('gateway');
-        if(!is_array($_ids)) {
+        if (!is_array($_ids)) {
             Mage::getSingleton('adminhtml/session')
                 ->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
@@ -157,7 +155,8 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                    'Total of %d record(s) were successfully deleted', count($_ids)
+                        'Total of %d record(s) were successfully deleted',
+                        count($_ids)
                     )
                 );
             } catch (Exception $e) {
@@ -189,7 +188,7 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
         $fileName, $content, $contentType='application/octet-stream')
     {
         $response = $this->getResponse();
-        $response->setHeader('HTTP/1.1 200 OK','');
+        $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);
         $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
         $response->setHeader('Content-Disposition', 'attachment; filename=' . $fileName);
@@ -199,7 +198,6 @@ class TM_Email_Adminhtml_Gateway_StorageController extends Mage_Adminhtml_Contro
         $response->setHeader('Content-type', $contentType);
         $response->setBody($content);
         $response->sendResponse();
-        die;
     }
 
     /**
