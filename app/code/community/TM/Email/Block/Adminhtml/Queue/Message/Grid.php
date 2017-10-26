@@ -22,11 +22,11 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
     protected function _prepareColumns()
     {
         $this->addColumn('message_id', array(
-          'header'    => Mage::helper('tm_email')->__('ID'),
-          'align'     => 'right',
-          'width'     => '50px',
-          'index'     => 'message_id',
-          'type'      => 'number'
+            'header'    => Mage::helper('tm_email')->__('ID'),
+            'align'     => 'right',
+            'width'     => '50px',
+            'index'     => 'message_id',
+            'type'      => 'number'
         ));
 
         $queues = Mage::getModel('tm_email/queue_queue')->toOptionHash();
@@ -80,10 +80,10 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
 //        ));
 
         $this->addColumn('created', array(
-          'header'    => Mage::helper('tm_email')->__('Created'),
-          'align'     => 'left',
-          'index'     => 'created',
-          'type'      => 'datetime',
+            'header'    => Mage::helper('tm_email')->__('Created'),
+            'align'     => 'left',
+            'index'     => 'created',
+            'type'      => 'datetime',
         ));
 
         $this->addColumn('status', array(
@@ -141,9 +141,6 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
             )
         ));
 
-
-
-
         return $this;
     }
 
@@ -155,9 +152,10 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
      */
     public function decorateQueue($value, $row, $column, $isExport)
     {
-//        Zend_Debug::dump($row->getData());
+        $value = $this->escapeHtml($value);
         $links = array();
         $href = $this->getUrl('*/queue_queue/edit', array('id' => $row->getQueueId()));
+        $href = $this->escapeUrl($href);
         $links[] = sprintf('<a href="%s">%s</a>', $href, $value);
         return implode(' | ', $links);
     }
@@ -171,7 +169,9 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
     {
         /* @var $mail Zend_Mail */
         $mail = $row->getMail();
-        return Zend_Mime_Decode::decodeQuotedPrintable($mail->getSubject());
+        $subject = $mail->getSubject();
+        $subject = $this->escapeHtml($subject);
+        return Zend_Mime_Decode::decodeQuotedPrintable($subject);
     }
 
     /**
@@ -183,8 +183,7 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
     {
         /* @var $mail Zend_Mail */
         $mail = $row->getMail();
-
-        return $mail->getFrom();
+        return $this->escapeHtml($mail->getFrom());
 
 //        $headers = $mail->getHeaders();
 //        $subject = Zend_Mime_Decode::decodeQuotedPrintable($mail->getSubject());
@@ -207,11 +206,14 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
 
         $headers = $mail->getHeaders();
         $to = isset($headers["To"][0]) ? $headers["To"][0] : '';
+        $to = $this->escapeHtml($to);
         return Zend_Mime_Decode::decodeQuotedPrintable($to);
     }
 
     protected function _getCell($value, $class = 'critical')
     {
+        $class = Mage::helper('core')->quoteEscape($class);
+        $value = $this->escapeHtml($value);
         return '<span class="grid-severity-' . $class . '"><span>'
             . $value
             . '</span></span>';
@@ -228,17 +230,17 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
         switch ($row->status) {
             case TM_Email_Model_Queue_Message_Status::FAILURE:
                 $class = 'critical';
-            break;
+                break;
             case TM_Email_Model_Queue_Message_Status::DISAPPROVED:
                 $class = 'major';
-            break;
+                break;
             case TM_Email_Model_Queue_Message_Status::APPROVED:
                 $class = 'minor';
-            break;
+                break;
             case TM_Email_Model_Queue_Message_Status::SUCCESS:
             default:
                 $class = 'notice';
-            break;
+                break;
         }
         return $this->_getCell($value, $class);
     }
