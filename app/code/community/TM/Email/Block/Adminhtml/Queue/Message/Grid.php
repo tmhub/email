@@ -1,6 +1,6 @@
 <?php
 
-class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class TM_Email_Block_Adminhtml_Queue_Message_Grid extends TM_Email_Block_Adminhtml_Widget_Grid
 {
     public function __construct()
     {
@@ -104,22 +104,12 @@ class TM_Email_Block_Adminhtml_Queue_Message_Grid extends Mage_Adminhtml_Block_W
             'renderer' => 'tm_email/adminhtml_queue_message_grid_renderer_action'
         ));
 
-        $this->addExportType('*/*/exportCsv', Mage::helper('tm_email')->__('CSV'));
-        $this->addExportType('*/*/exportXml', Mage::helper('tm_email')->__('XML'));
-
         return parent::_prepareColumns();
     }
 
     protected function _prepareMassaction()
     {
-        $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('tm_email');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('tm_email')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
-        ));
+        parent::_prepareMassaction();
 
         $_statuses = Mage::getSingleton('tm_email/queue_message_status')->toOptionHash();
         $statuses = array();

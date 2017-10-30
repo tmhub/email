@@ -17,13 +17,13 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
     {
         $id = $this->getRequest()->getParam('id');
         $form = new Varien_Data_Form(array(
-                'id' => 'edit_form',
-                'action' => $this->getUrl('*/*/save', array('id' => $id)),
-                'method' => 'post',
-            )
-        );
+            'id' => 'edit_form',
+            'action' => $this->getUrl('*/*/save', array('id' => $id)),
+            'method' => 'post',
+        ));
 
-        if (Mage::registry('tm_email_gateway_storage_data') ) {
+        $data = array();
+        if (Mage::registry('tm_email_gateway_storage_data')) {
             $data = Mage::registry('tm_email_gateway_storage_data')->getData();
         }
 
@@ -90,6 +90,7 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'host',
+            'note'      => Mage::helper('tm_email')->__('Usually imap or pop server name(ip)'),
         ));
 
         $fieldset->addField('user', 'text', array(
@@ -118,20 +119,7 @@ class TM_Email_Block_Adminhtml_Gateway_Storage_Edit_Form extends Mage_Adminhtml_
             'label'     => Mage::helper('tm_email')->__('Secure'),
             'name'      => 'secure',
             'required'  => true,
-            'values'    => array(
-                array(
-                    'value'     => 0,
-                    'label'     => Mage::helper('tm_email')->__('None'),
-                ),
-                array(
-                    'value'     => 1,
-                    'label'     => Mage::helper('tm_email')->__('SSL'),
-                ),
-                array(
-                    'value'     => 2,
-                    'label'     => Mage::helper('tm_email')->__('TLS'),
-                )
-            ),
+            'values'    => TM_Email_Model_System_Config_Source_Gateway_Transport_Secure::toOptionArray(),
         ));
         /*
         $fieldset->addField('remove', 'select', array(

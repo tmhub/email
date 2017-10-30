@@ -1,7 +1,8 @@
 <?php
 
-class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller_Action
+class TM_Email_Adminhtml_Queue_QueueController extends TM_Email_Controller_Adminhtml_Email_Abstract
 {
+    protected $resource = 'templates_master/tm_email/queue';
 
 //    protected function _initAction() {
 //        $this->loadLayout();
@@ -13,11 +14,6 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
 //
 //        return $this;
 //    }
-    public function indexAction()
-    {
-        $this->loadLayout();
-        $this->renderLayout();
-    }
 
     public function editAction()
     {
@@ -45,74 +41,20 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
         $this->renderLayout();
     }
 
-    public function newAction()
+    protected function _saveAction(array $data)
     {
-        $this->_redirect('*/*/edit');
+        $model = Mage::getModel('tm_email/queue_queue');
+        if (empty($data['queue_id'])) {
+            unset($data['queue_id']);
+        }
+        $model->addData($data);
+        $model->save();
+        return $model;
     }
 
-    public function saveAction()
+    protected function _deleteAction($id)
     {
-        $data = $this->getRequest()->getPost();
-
-        if (!$data) {
-            Mage::getSingleton('adminhtml/session')->addError(
-                Mage::helper('tm_email')->__('Unable to find item to save')
-            );
-            $this->_redirect('*/*/');
-        }
-
-        try {
-            $model = Mage::getModel('tm_email/queue_queue');
-
-            if (empty($data['queue_id'])) {
-                unset($data['queue_id']);
-            }
-            $model->setData($data);
-
-            $model->save();
-
-            //success
-            Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('tm_email')->__('Item was successfully saved')
-            );
-            Mage::getSingleton('adminhtml/session')->setFormData(false);
-
-            if ($this->getRequest()->getParam('back')) {
-                $this->_redirect('*/*/edit', array('id' => $model->getId()));
-                return;
-            }
-            $this->_redirect('*/*/');
-            return;
-        } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            Mage::getSingleton('adminhtml/session')->setFormData($data);
-            $this->_redirect(
-                '*/*/edit',
-                array('id' => $this->getRequest()->getParam('id'))
-            );
-            return;
-        }
-    }
-
-    public function deleteAction()
-    {
-        $_id = $this->getRequest()->getParam('id');
-        if (0 < $_id) {
-            try {
-                $model = Mage::getModel('tm_email/queue_queue');
-
-                $model->setId($_id)->delete();
-
-                Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('adminhtml')->__('Item was successfully deleted')
-                );
-                $this->_redirect('*/*/');
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                $this->_redirect('*/*/edit', array('id' => $_id));
-            }
-        }
-        $this->_redirect('*/*/');
+        return Mage::getModel('tm_email/queue_queue')->setId($id)->delete();
     }
 
     public function massDeleteAction()
@@ -147,7 +89,7 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
             ->createBlock('tm_email/adminhtml_queue_queue_grid')
             ->getCsv();
 
-        $this->_sendUploadResponse($fileName, $content);
+        $this->_prepareDownloadResponse($fileName, $content);
     }
 
     public function exportXmlAction()
@@ -157,33 +99,6 @@ class TM_Email_Adminhtml_Queue_QueueController extends Mage_Adminhtml_Controller
             ->createBlock('tm_email/adminhtml_queue_queue_grid')
             ->getXml();
 
-        $this->_sendUploadResponse($fileName, $content);
-    }
-
-    protected function _sendUploadResponse(
-        $fileName, $content, $contentType='application/octet-stream')
-    {
-        $response = $this->getResponse();
-        $response->setHeader('HTTP/1.1 200 OK', '');
-        $response->setHeader('Pragma', 'public', true);
-        $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-        $response->setHeader('Content-Disposition', 'attachment; filename=' . $fileName);
-        $response->setHeader('Last-Modified', date('r'));
-        $response->setHeader('Accept-Ranges', 'bytes');
-        $response->setHeader('Content-Length', strlen($content));
-        $response->setHeader('Content-type', $contentType);
-        $response->setBody($content);
-        $response->sendResponse();
-    }
-
-    /**
-     * Check the permission to run it
-     *
-     * @return boolean
-     */
-    protected function _isAllowed()
-    {
-       return Mage::getSingleton('admin/session')
-           ->isAllowed('templates_master/tm_email/queue');
+        $this->_prepareDownloadResponse($fileName, $content);
     }
 }

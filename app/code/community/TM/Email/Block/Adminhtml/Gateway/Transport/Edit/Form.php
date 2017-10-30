@@ -220,12 +220,12 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             ");
         }
 
-
         $fieldset->addField('host', 'text', array(
             'label'     => Mage::helper('tm_email')->__('Host'),
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'host',
+            'note'      => Mage::helper('tm_email')->__('Usually server name or ip'),
         ));
 
         $fieldset->addField('user', 'text', array(
@@ -233,13 +233,16 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_Edit_Form extends Mage_Adminhtm
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'user',
+            'note'      => Mage::helper('tm_email')->__('Usually smtp server username or pub api key'),
         ));
 
         $fieldset->addField('password', 'password', array(
             'label'     => Mage::helper('tm_email')->__('Password'),
+            'title'     => Mage::helper('tm_email')->__('Pass'),
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'password',
+            'note'      => Mage::helper('tm_email')->__('Usually smtp server password or private api key'),
         ));
 
         $fieldset->addField('port', 'text', array(

@@ -1,12 +1,8 @@
 <?php
 
-class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controller_Action
+class TM_Email_Adminhtml_Queue_MessageController extends TM_Email_Controller_Adminhtml_Email_Abstract
 {
-    public function indexAction()
-    {
-        $this->loadLayout();
-        $this->renderLayout();
-    }
+    protected $resource = 'templates_master/tm_email/queue';
 
     public function previewAction()
     {
@@ -52,10 +48,10 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
         $request = $this->getRequest();
         $key = $request->getParam('massaction_prepare_key');
         $_ids = $request->getParam($key);
-        if(!is_array($_ids)) {
+        if (!is_array($_ids)) {
             Mage::getSingleton('adminhtml/session')->addError(
-                Mage::helper('tm_email')->__('Please select item(s)'
-            ));
+                Mage::helper('tm_email')->__('Please select item(s)')
+            );
         } else {
             try {
                 $status = (int) $request->getParam('status');
@@ -67,7 +63,8 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
                         ->save();
                 }
                 $this->_getSession()->addSuccess(
-                    Mage::helper('tm_email')->__('Total of %d record(s) were successfully updated',
+                    Mage::helper('tm_email')->__(
+                        'Total of %d record(s) were successfully updated',
                         count($_ids)
                     )
                 );
@@ -81,7 +78,7 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
     public function massDeleteAction()
     {
         $_ids = $this->getRequest()->getParam('tm_email');
-        if(!is_array($_ids)) {
+        if (!is_array($_ids)) {
             Mage::getSingleton('adminhtml/session')
                 ->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
@@ -91,23 +88,15 @@ class TM_Email_Adminhtml_Queue_MessageController extends Mage_Adminhtml_Controll
                     $model->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('adminhtml')->__('Total of %d record(s) were successfully deleted', count($_ids)
-                ));
+                    Mage::helper('adminhtml')->__(
+                        'Total of %d record(s) were successfully deleted',
+                        count($_ids)
+                    )
+                );
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             }
         }
         $this->_redirect('*/*/index');
-    }
-
-    /**
-     * Check the permission to run it
-     *
-     * @return boolean
-     */
-    protected function _isAllowed()
-    {
-       return Mage::getSingleton('admin/session')
-           ->isAllowed('templates_master/tm_email/queue');
     }
 }

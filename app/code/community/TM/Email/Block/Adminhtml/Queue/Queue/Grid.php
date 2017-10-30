@@ -1,6 +1,6 @@
 <?php
 
-class TM_Email_Block_Adminhtml_Queue_Queue_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class TM_Email_Block_Adminhtml_Queue_Queue_Grid extends TM_Email_Block_Adminhtml_Widget_Grid
 {
     public function __construct()
     {
@@ -22,25 +22,25 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Grid extends Mage_Adminhtml_Block_Wid
     protected function _prepareColumns()
     {
         $this->addColumn('queue_id', array(
-          'header'    => Mage::helper('tm_email')->__('ID'),
-          'align'     => 'right',
-          'width'     => '50px',
-          'index'     => 'queue_id',
-          'type'      => 'number'
+            'header'    => Mage::helper('tm_email')->__('ID'),
+            'align'     => 'right',
+            'width'     => '50px',
+            'index'     => 'queue_id',
+            'type'      => 'number'
         ));
 
         $this->addColumn('queue_name', array(
-          'header'    => Mage::helper('tm_email')->__('Name'),
-          'align'     => 'left',
-          'index'     => 'queue_name',
+            'header'    => Mage::helper('tm_email')->__('Name'),
+            'align'     => 'left',
+            'index'     => 'queue_name',
         ));
 
 
         $this->addColumn('timeout', array(
-          'header'    => Mage::helper('tm_email')->__('Timeout'),
-          'align'     => 'left',
-          'index'     => 'timeout',
-          'type'      => 'number'
+            'header'    => Mage::helper('tm_email')->__('Timeout'),
+            'align'     => 'left',
+            'index'     => 'timeout',
+            'type'      => 'number'
         ));
 
         $this->addColumn('default_status', array(
@@ -70,28 +70,6 @@ class TM_Email_Block_Adminhtml_Queue_Queue_Grid extends Mage_Adminhtml_Block_Wid
             'is_system' => true,
         ));
 
-        $this->addExportType('*/*/exportCsv', Mage::helper('tm_email')->__('CSV'));
-        $this->addExportType('*/*/exportXml', Mage::helper('tm_email')->__('XML'));
-
         return parent::_prepareColumns();
-    }
-
-    protected function _prepareMassaction()
-    {
-        $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('tm_email');
-
-        $this->getMassactionBlock()->addItem('delete', array(
-             'label'    => Mage::helper('tm_email')->__('Delete'),
-             'url'      => $this->getUrl('*/*/massDelete'),
-             'confirm'  => Mage::helper('tm_email')->__('Are you sure?')
-        ));
-
-        return $this;
-    }
-
-    public function getRowUrl($row)
-    {
-        return $this->getUrl('*/*/edit', array('id' => $row->getId()));
     }
 }
