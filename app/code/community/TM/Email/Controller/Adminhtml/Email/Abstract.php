@@ -11,10 +11,10 @@ abstract class TM_Email_Controller_Adminhtml_Email_Abstract extends Mage_Adminht
     {
         $this->loadLayout();
         if (!empty($this->breadcrumbLabel)) {
-            $this->_setActiveMenu('helpmate/helpmate')
+            $this->_setActiveMenu('templates_master/tm_email')
                 ->_addBreadcrumb(
-                    Mage::helper('helpmate')->__($this->breadcrumbLabel),
-                    Mage::helper('helpmate')->__($this->breadcrumbTitle)
+                    $this->__($this->breadcrumbLabel),
+                    $this->__($this->breadcrumbTitle)
                 );
         }
 
@@ -41,7 +41,7 @@ abstract class TM_Email_Controller_Adminhtml_Email_Abstract extends Mage_Adminht
         $data = $this->getRequest()->getPost();
         if (!$data) {
             Mage::getSingleton('adminhtml/session')->addError(
-                Mage::helper('helpmate')->__('Unable to find item to save')
+                $this->__('Unable to find item to save')
             );
             $this->_redirect('*/*/');
         }
@@ -51,7 +51,7 @@ abstract class TM_Email_Controller_Adminhtml_Email_Abstract extends Mage_Adminht
 
             //success
             Mage::getSingleton('adminhtml/session')->addSuccess(
-                Mage::helper('helpmate')->__('Item was successfully saved')
+                $this->__('Item was successfully saved')
             );
             Mage::getSingleton('adminhtml/session')->setFormData(false);
 
