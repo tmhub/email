@@ -119,12 +119,25 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
     public function getTransport()
     {
         if (!$this->_transport instanceof Zend_Mail_Transport_Abstract) {
+            $senderEmail = $this->getSenderEmail();
 
             $config = self::CONFIG_DEFAULT_TRANSPORT;
+
+            $groups = array('ident_general', 'ident_sales' , 'ident_support', 'ident_custom1', 'ident_custom2');
+            foreach ($groups as $group) {
+                $groupEmail = Mage::getStoreConfig('trans_email/' . $group . '/email');
+                if ($senderEmail == $groupEmail ||
+                    false != strstr($senderEmail, $groupEmail)
+                ) {
+                    $config = 'trans_email/' . $group . '/transport';
+                    break;
+                }
+            }
+
             $transportId = (int) Mage::getStoreConfig($config, $this->_storeId);
             $modelTransport = Mage::getModel('tm_email/gateway_transport');
             $this->_transport = $modelTransport
-                ->setSenderEmail($this->getSenderEmail())
+                ->setSenderEmail($senderEmail)
                 ->getTransport($transportId)
             ;
             Zend_Mail::setDefaultTransport($this->_transport);

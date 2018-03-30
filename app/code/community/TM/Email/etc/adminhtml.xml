@@ -19,16 +19,16 @@
                             <!--<action>adminhtml/gateway/index</action>-->
                             <sort_order>20</sort_order>
                             <children>
-                                <queue>
-                                    <title>Storage</title>
-                                    <action>adminhtml/gateway_storage/index</action>
-                                    <sort_order>10</sort_order>
-                                </queue>
                                 <message>
-                                    <title>Transport</title>
+                                    <title>Transport (for sending)</title>
                                     <action>adminhtml/gateway_transport/index</action>
-                                    <sort_order>20</sort_order>
+                                    <sort_order>10</sort_order>
                                 </message>
+                                <queue>
+                                    <title>Storage (for receive)</title>
+                                    <action>adminhtml/gateway_storage/index</action>
+                                    <sort_order>20</sort_order>
+                                </queue>
                             </children>
                         </gateway>
                         <queue translate="title">

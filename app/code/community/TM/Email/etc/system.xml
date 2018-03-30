@@ -39,5 +39,86 @@
                 </default>
             </groups>
         </tm_email>
+
+        <trans_email>
+            <groups>
+                <ident_custom1>
+                    <fields>
+                        <transport translate="label">
+                            <label>Mail Transport</label>
+                            <frontend_type>select</frontend_type>
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <source_model>tm_email/system_config_source_gateway_transport</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Templates Master -> Email -> Email Gateways -> Transport</comment>
+                        </transport>
+                    </fields>
+                </ident_custom1>
+                <ident_custom2>
+                    <fields>
+                        <transport translate="label">
+                            <label>Mail Transport</label>
+                            <frontend_type>select</frontend_type>
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <source_model>tm_email/system_config_source_gateway_transport</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Templates Master -> Email -> Email Gateways -> Transport</comment>
+                        </transport>
+                    </fields>
+                </ident_custom2>
+                <ident_general>
+                    <fields>
+                        <transport translate="label">
+                            <label>Mail Transport</label>
+                            <frontend_type>select</frontend_type>
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <source_model>tm_email/system_config_source_gateway_transport</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <config_path>tm_email/default/transport</config_path>
+                            <comment>Templates Master -> Email -> Email Gateways -> Transport</comment>
+                        </transport>
+                    </fields>
+                </ident_general>
+                <ident_sales>
+                    <fields>
+                        <transport translate="label">
+                            <label>Mail Transport</label>
+                            <frontend_type>select</frontend_type>
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <source_model>tm_email/system_config_source_gateway_transport</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Templates Master -> Email -> Email Gateways -> Transport</comment>
+                        </transport>
+                    </fields>
+                </ident_sales>
+                <ident_support>
+                    <fields>
+                        <transport translate="label">
+                            <label>Mail Transport</label>
+                            <frontend_type>select</frontend_type>
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <source_model>tm_email/system_config_source_gateway_transport</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Templates Master -> Email -> Email Gateways -> Transport</comment>
+                        </transport>
+                    </fields>
+                </ident_support>
+            </groups>
+        </trans_email>
     </sections>
 </config>
