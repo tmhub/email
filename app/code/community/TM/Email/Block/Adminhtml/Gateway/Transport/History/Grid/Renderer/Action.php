@@ -15,7 +15,7 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_History_Grid_Renderer_Action
 
         $title = Mage::helper('tm_email')->__('View Email');
         $script = '
-                var changesUrl = \'' . $this->getUrl('*/*/preview', array('id' => $row->getId())) .  '\';
+                var changesUrl = \'' . $this->getUrl('*/*/view', array('id' => $row->getId())) .  '\';
                 Dialog.info(null, {
                     draggable:true,
                     resizable:true,

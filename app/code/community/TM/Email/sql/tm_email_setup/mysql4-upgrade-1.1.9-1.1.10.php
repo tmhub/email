@@ -38,10 +38,8 @@ $table = $installer->getConnection()
     //     'unsigned'  => true,
     //     'nullable'  => false,
     //     ), 'Transport ID')
-    ->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_INTEGER, 10, array(
-        'unsigned'  => true,
-        'nullable'  => false,
-        ), 'Created')
+   ->addColumn('created_at', Varien_Db_Ddl_Table::TYPE_DATE, null, array(
+        ), 'Date')
     ;
 $installer->getConnection()->createTable($table);
 

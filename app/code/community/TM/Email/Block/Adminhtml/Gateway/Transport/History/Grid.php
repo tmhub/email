@@ -50,10 +50,32 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_History_Grid extends Mage_Admin
             'frame_callback' => array($this, 'decorateMime'),
         ));
 
+        $emailTemplates = array();
+        $_emailTemplates = Mage_Core_Model_Email_Template::getDefaultTemplatesAsOptionsArray();
+        foreach ($_emailTemplates as $_emailTemplate) {
+            $emailTemplates[$_emailTemplate['value']] = $_emailTemplate['label'];
+        }
+        $_emailTemplates = Mage::getSingleton('adminhtml/system_config_source_email_template')->toOptionArray();
+        foreach ($_emailTemplates as $_emailTemplate) {
+            $emailTemplates[$_emailTemplate['value']] = $_emailTemplate['label'];
+        }
+
+        $emailTemplates[''] = 'Default Email Template';
+
         $this->addColumn('template_id', array(
             'header'    => Mage::helper('tm_email')->__('Template'),
             'align'     => 'left',
             'index'     => 'template_id',
+            'type'      => 'options',
+            'options'   => $emailTemplates
+        ));
+
+        $this->addColumn('created_at', array(
+            'header'        => Mage::helper('tm_abandoned')->__('Created date'),
+            'align'         => 'left',
+            'type'          => 'date',
+            'width'         => '100px',
+            'index'         => 'created_at',
         ));
 
         $this->addColumn('actions', array(
