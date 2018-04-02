@@ -248,8 +248,10 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
             if (method_exists($this, '_beforeSend')) {
                 $this->_beforeSend($transport, $mail);
             }
+
             if (empty($this->_queueName)) {
                 $mail->send($transport);
+                $this->addHistoryEntry($mail, $text);
             } else {
                 Mage::getModel('tm_email/queue')
                     ->setName($this->_queueName)
@@ -257,13 +259,33 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
                 ;
             }
             $this->_mail = null;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->_mail = null;
             Mage::logException($e);
             return false;
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @param Zend_Mail $mail
+     * @param string    $body
+     */
+    public function addHistoryEntry(Zend_Mail $mail, $body)
+    {
+        $historyModel = Mage::getModel('tm_email/gateway_transport_history');
+
+        $headers = $mail->getHeaders();
+        $to = isset($headers["To"][0]) ? $headers["To"][0] : '';
+
+        return $historyModel->setData(array(
+            'to' => $to,
+            'from' => $mail->getFrom(),
+            'subject' => $mail->getSubject(),
+            'template_id' => $this->getId(),
+            'body' => $body,
+        ))->save();
     }
 }

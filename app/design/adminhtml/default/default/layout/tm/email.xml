@@ -55,4 +55,17 @@
             <block type="tm_email/adminhtml_system_email_template_preview" name="content" as="content"></block>
         </block>
     </adminhtml_queue_message_preview>
+
+    <adminhtml_history_transport_index>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="tm_email/adminhtml_gateway_transport_history" name="email.gateway.transport.history" />
+        </reference>
+    </adminhtml_history_transport_index>
+
+    <adminhtml_history_transport_view>
+        <block type="core/template" name="root" output="toHtml" template="system/email/template/preview.phtml">
+            <block type="tm_email/adminhtml_gateway_transport_history_view" name="content" as="content"></block>
+        </block>
+    </adminhtml_history_transport_view>
 </layout>

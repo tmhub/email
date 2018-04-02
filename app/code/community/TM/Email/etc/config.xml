@@ -2,7 +2,7 @@
 <config>
     <modules>
         <TM_Email>
-            <version>1.1.9</version>
+            <version>1.1.10</version>
         </TM_Email>
     </modules>
 
@@ -27,6 +27,9 @@
                     <gateway_transport>
                         <table>tm_email_gateway_transport</table>
                     </gateway_transport>
+                    <gateway_transport_history>
+                        <table>tm_email_gateway_transport_history</table>
+                    </gateway_transport_history>
                     <queue_queue>
                         <table>tm_email_queue_queue</table>
                     </queue_queue>

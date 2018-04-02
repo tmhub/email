@@ -90,7 +90,9 @@ class TM_Email_Model_Queue //extends Zend_Queue
                 //send the email here
                 list($mail, $transport) = unserialize($message->body);
                 try {
+                    $body = $mail->getBodyText() . $mail->getBodyHtml();
                     $mail->send($transport);
+                    $this->addHistoryEntry($mail, $body);
                     $status = true;
                 } catch (Exception $e) {
                     Mage::logException($e);
@@ -112,5 +114,26 @@ class TM_Email_Model_Queue //extends Zend_Queue
         }
 
         return $status;
+    }
+
+    /**
+     *
+     * @param Zend_Mail $mail
+     * @param string    $body
+     */
+    public function addHistoryEntry(Zend_Mail $mail, $body)
+    {
+        $historyModel = Mage::getModel('tm_email/gateway_transport_history');
+
+        $headers = $mail->getHeaders();
+        $to = isset($headers["To"][0]) ? $headers["To"][0] : '';
+
+        return $historyModel->setData(array(
+            'to' => $to,
+            'from' => $mail->getFrom(),
+            'subject' => $mail->getSubject(),
+            // 'template_id' => $this->getId(),
+            'body' => $body,
+        ))->save();
     }
 }
