@@ -134,7 +134,11 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
                 }
             }
 
-            $transportId = (int) Mage::getStoreConfig($config, $this->_storeId);
+            $transportId = Mage::getStoreConfig($config, $this->_storeId);
+            if (empty($transportId)) {
+                $transportId = Mage::getStoreConfig(self::CONFIG_DEFAULT_TRANSPORT, $this->_storeId);
+            }
+            $transportId = (int) $transportId;
             $modelTransport = Mage::getModel('tm_email/gateway_transport');
             $this->_transport = $modelTransport
                 ->setSenderEmail($senderEmail)

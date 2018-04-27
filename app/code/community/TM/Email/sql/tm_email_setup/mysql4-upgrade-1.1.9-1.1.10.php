@@ -44,3 +44,11 @@ $table = $installer->getConnection()
 $installer->getConnection()->createTable($table);
 
 $installer->endSetup();
+
+$defaultTransport = Mage::getStoreConfig('tm_email/default/transport');
+
+Mage::getConfig()->saveConfig('trans_email/ident_custom1/transport', $defaultTransport);
+Mage::getConfig()->saveConfig('trans_email/ident_custom2/transport', $defaultTransport);
+Mage::getConfig()->saveConfig('trans_email/ident_general/transport', $defaultTransport);
+Mage::getConfig()->saveConfig('trans_email/ident_sales/transport', $defaultTransport);
+Mage::getConfig()->saveConfig('trans_email/ident_support/transport', $defaultTransport);
