@@ -71,7 +71,7 @@ class TM_Email_Block_Adminhtml_Gateway_Transport_History_Grid extends Mage_Admin
         ));
 
         $this->addColumn('created_at', array(
-            'header'        => Mage::helper('tm_abandoned')->__('Created date'),
+            'header'        => Mage::helper('tm_email')->__('Created date'),
             'align'         => 'left',
             'type'          => 'date',
             'width'         => '100px',
