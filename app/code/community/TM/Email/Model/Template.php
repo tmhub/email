@@ -42,6 +42,7 @@
 class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
 {
     const CONFIG_DEFAULT_TRANSPORT = 'tm_email/default/transport';
+    const CONFIG_DEFAULT_HISTORY = 'tm_email/default/history';
 
     /**
      *
@@ -279,6 +280,12 @@ class TM_Email_Model_Template extends TM_Email_Model_Template_Abstract
      */
     public function addHistoryEntry(Zend_Mail $mail, $body)
     {
+        $enable = (bool) Mage::getStoreConfig(self::CONFIG_DEFAULT_HISTORY, $this->_storeId);
+
+        if ($enable === false) {
+            return;
+        }
+
         $historyModel = Mage::getModel('tm_email/gateway_transport_history');
 
         $headers = $mail->getHeaders();

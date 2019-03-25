@@ -130,5 +130,10 @@
                 <tm_email/>
             </ignored_sections>
         </subscriptionchecker>
+        <tm_email>
+            <default>
+                <history>1</history>
+            </default>
+        </tm_email>
     </default>
 </config>

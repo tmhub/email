@@ -40,8 +40,8 @@ class TM_Email_Model_Queue //extends Zend_Queue
         if (!empty($name)) {
             $this->setName($name);
         }
-        if (!isset($this->_registry[$this->_name])) {
 
+        if (!isset($this->_registry[$this->_name])) {
             $options = array(
                 Zend_Queue::NAME => $this->_name
             );
@@ -123,6 +123,11 @@ class TM_Email_Model_Queue //extends Zend_Queue
      */
     public function addHistoryEntry(Zend_Mail $mail, $body)
     {
+        $enable = (bool) Mage::getStoreConfig(TM_Email_Model_Template::CONFIG_DEFAULT_HISTORY);
+
+        if ($enable === false) {
+            return;
+        }
         $historyModel = Mage::getModel('tm_email/gateway_transport_history');
 
         $headers = $mail->getHeaders();
