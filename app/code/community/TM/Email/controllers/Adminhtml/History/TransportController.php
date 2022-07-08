@@ -6,7 +6,7 @@ class TM_Email_Adminhtml_History_TransportController extends TM_Email_Controller
     protected $breadcrumbLabel = 'History';
     protected $breadcrumbTitle = 'Transport';
 
-    protected $resource = 'templates_master/tm_email/gateway';
+    protected $resource = 'templates_master/tm_email/history';
 
     public function viewAction()
     {
