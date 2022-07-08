@@ -87,14 +87,48 @@
                                 <title>Email</title>
                                 <sort_order>11</sort_order>
                                 <children>
+                                    <email_template translate="title">
+                                        <title>Transactional Emails</title>
+                                        <sort_order>10</sort_order>
+                                    </email_template>
                                     <gateway translate="title">
                                         <title>Email Gateways</title>
                                         <sort_order>20</sort_order>
+                                        <children>
+                                            <transport translate="title">
+                                                <title>Transport (for sending)</title>
+                                                <sort_order>10</sort_order>
+                                            </transport>
+                                            <storage translate="title">
+                                                <title>Storage (for receive)</title>
+                                                <sort_order>20</sort_order>
+                                            </storage>
+                                        </children>
                                     </gateway>
                                     <queue translate="title">
                                         <title>Email Queues</title>
                                         <sort_order>30</sort_order>
+                                        <children>
+                                            <queue translate="title">
+                                                <title>Queues</title>
+                                                <sort_order>10</sort_order>
+                                            </queue>
+                                            <message translate="title">
+                                                <title>Messages</title>
+                                                <sort_order>20</sort_order>
+                                            </message>
+                                        </children>
                                     </queue>
+                                    <history translate="title">
+                                        <title>Email History</title>
+                                        <sort_order>40</sort_order>
+                                        <children>
+                                            <queue translate="title">
+                                                <title>Sent</title>
+                                                <sort_order>10</sort_order>
+                                            </queue>
+                                        </children>
+                                    </history>
                                 </children>
                             </tm_email>
                         </children>
