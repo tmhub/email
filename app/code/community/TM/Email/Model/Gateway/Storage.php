@@ -42,6 +42,11 @@ class TM_Email_Model_Gateway_Storage extends Mage_Core_Model_Abstract
 
     public function getStorage()
     {
+        var_dump([
+            __METHOD__,
+            $this->getData()
+        ]);
+        die;
         $type = $this->getType();
 
         if (self::TYPE_POP3 == $type) {

@@ -48,6 +48,35 @@
 
                     </fields>
                 </default>
+                <!-- <oauth2 translate="label" module="tm_email">
+                    <label>Google Oauth2</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                       <client_id translate="label">
+                            <label>Client ID</label>
+                            <!-- <frontend_type>password</frontend_type> -->
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<a href="https://developers.google.com/identity/openid-connect/openid-connect#registeringyourapp" target="_blank">How Do I Get Credentials?</a>]]></comment>
+                        </client_id>
+                        <client_secret translate="label">
+                            <label>Client Secret</label>
+                            <frontend_type>password</frontend_type>
+                            <!-- <frontend_type>text</frontend_type> -->
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<a href="https://developers.google.com/identity/openid-connect/openid-connect#registeringyourapp" target="_blank">How Do I Get Credentials?</a>]]></comment>
+                        </client_secret>
+                    </fields>
+                </oauth2> -->
             </groups>
         </tm_email>
 
